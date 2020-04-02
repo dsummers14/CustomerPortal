@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Sales Invoice";
+    
+}
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-18 col-md-12">
+            @(Html.Kendo().Grid<Microsoft.NAV.salesInvoice>()
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.number).ClientTemplate(Html.ActionLink("#=number#", "Details",new {id = "#=id#"}).ToHtmlString()).Title("Invoice No");
+            columns.Bound(p => p.customerNumber);
+            columns.Bound(p => p.customerName);
+            columns.Bound(p => p.invoiceDate).Format("{0:MM/dd/yyyy}");
+            columns.Bound(p => p.shippingPostalAddress.city).Filterable(false).Sortable(false);
+            columns.Bound(p => p.shippingPostalAddress.state).Filterable(false).Sortable(false);
+            columns.Bound(p => p.totalAmountIncludingTax);
+
+        })
+        .Pageable()
+        .Sortable()
+        .Scrollable()
+        .Filterable()
+        .HtmlAttributes(new {style = "height:550px;"})
+        .DataSource(dataSource => dataSource
+        .Custom()
+         .Type("odata-v4")
+          .Transport(transport =>
+          {
+        transport.Read(read => read.Url("/oData/SalesInvoices"));
+    })
+        .PageSize(3)
+        .ServerPaging(true)
+        .ServerSorting(true)
+        .ServerFiltering(true)
+        ))
+        </div>
+    </div>
+</div>

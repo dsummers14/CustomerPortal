@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Customers Page";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-18 col-md-12">
+        @(Html.Kendo().Grid<Microsoft.NAV.customer>()
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.number);
+            columns.Bound(p => p.displayName);
+            columns.Bound(p => p.lastModifiedDateTime).Format("{0:MM/dd/yyyy}");
+            columns.Bound(p => p.address.city).Filterable(false).Sortable(false);
+            columns.Bound(p => p.address.state).Filterable(false).Sortable(false);
+        })
+        .Pageable()
+        .Sortable()
+        .Scrollable()
+        .Filterable()
+        .HtmlAttributes(new { style = "height:550px;" })
+        .DataSource(dataSource => dataSource
+        .Custom()
+         .Type("odata-v4")
+          .Transport(transport =>
+          {
+              transport.Read(read => read.Url("/oData/Customers"));
+          })
+        .PageSize(3)
+        .ServerPaging(true)
+        .ServerSorting(true)
+        .ServerFiltering(true)
+        ))
+        </div>
+    </div>
+</div>

@@ -10,6 +10,7 @@ using Microsoft.AspNet.OData.Query;
 
 namespace WebApplication1.Controllers
 {
+    [Authorize]
     public class SalesInvoiceController : Controller
     {
       

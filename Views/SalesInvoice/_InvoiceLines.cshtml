@@ -1,0 +1,177 @@
+﻿@(Html.Kendo().Grid<Microsoft.NAV.salesInvoiceLine>()
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.Bound(l => l.lineDetails.number).Width(240).EditorTemplateName("ItemNoLookup").Title("Item No");
+            columns.Bound(l => l.description).Width(450);
+            columns.Bound(l => l.quantity).Width(75);
+            columns.Bound(l => l.unitPrice).Format("{0:c}").Width(75);
+            columns.Bound(l => l.amountExcludingTax).Format("{0:c}").Hidden(true);
+            columns.Bound(l => l.amountIncludingTax).Format("{0:c}").Title("Amount Including Tax");
+
+        })
+        .Pageable()
+        .Sortable()
+        .Scrollable()
+        .Filterable()
+        .HtmlAttributes(new {style = "height:550px;"})
+        .DataSource(dataSource => dataSource
+        .Custom()
+         .Type("odata-v4")
+          .Transport(transport =>
+          {
+              transport.Read(read => read.Url("/oData/SalesInvoiceLines").Data("function() {return {'$filter': 'documentId eq " + Model.id + "' }}"));
+          })
+        .PageSize(1)
+        .ServerPaging(true)
+        .ServerSorting(true)
+        .ServerFiltering(true)
+        ))
+@*@(Html.Kendo.Window() _
+    .Name("ItemLookupWindow") _
+    .Title("Item Lookup") _
+    .Visible(False) _
+    .Resizable(Sub(r) r.Enabled(True)) _
+    .Draggable(True) _
+    .Content(Function(ct)
+                @<div>
+                    @Html.Partial("_ItemLookupGrid")
+                </div>
+                                End Function) _
+                                                                                                        .Render()) *@
+
+@*"function() {return {'$filter': 'documentId eq " + Model.id  + "' }}"
+"function() {return {'documentId': '" + Model.id  + "' }}"*@
+
+<script type="text/javascript">
+
+    var orderLine
+    var ItemNo
+    var Description
+    // var cell
+
+    function editEvent(e) {
+        if (e.model.isNew() == false) {
+            $("#ItemNo").attr("readonly", true);
+        }
+        else {
+            $("#ItemNo").attr("readonly", false);
+            e.model.set("ItemNo", ItemNo);
+            e.model.set("Description", Description);
+            e.model.set("Quantity", 1);
+            ItemNo = "";
+            Description = "";
+        }
+    }
+
+    function requestend(e) {
+        if ((e.type == "update") || (e.type == "create")) {
+            this.read();
+        }
+    }
+
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+
+                    });
+                }
+            });
+            alert(message);
+
+            var grid = $("#OrderLines").data("kendoGrid");
+            grid.dataSource.read();
+        }
+    }
+
+    function onSelectItemNo(e) {
+        var thisItem = this.dataItem(e.item.index());
+
+        var row = $(this.element).closest("tr");
+        var grid = $("#OrderLines").data("kendoGrid");
+        var dataItem = grid.dataItem(row);
+        dataItem.set("Description", thisItem.Description);
+        e.sender.close();
+    }
+
+    function onItemLookup(e) {
+        var row = $(this.element).closest("tr");
+        var grid = $("#OrderLines").data("kendoGrid");
+        orderLine = grid.dataItem(row);
+        //cell = $('#OrderLines').find('tbody tr:eq(' + e.index + ') td:eq(1)');
+        e.preventDefault();
+
+        var wnd = $("#ItemLookupWindow").data("kendoWindow");
+        wnd.center().open();
+    };
+
+
+    function ItemLookupAdd(e) {
+        e.preventDefault();
+        var Item = this.dataItem($(e.currentTarget).closest("tr"));
+
+        ItemNo = Item.No;
+        Description = Item.Description;
+
+        var grid = $("#OrderLines").data("kendoGrid");
+        grid.addRow();
+
+        var wnd = $("#ItemLookupWindow").data("kendoWindow");
+        wnd.center().close();
+    }
+
+    function onPastSales(e) {
+        var wnd = $("#PastSalesWindow").data("kendoWindow");
+        wnd.center().open();
+    };
+
+    function PastSalesAdd(e) {
+        e.preventDefault();
+        var Item = this.dataItem($(e.currentTarget).closest("tr"));
+
+        ItemNo = Item.No;
+        Description = Item.Description;
+
+        var grid = $("#OrderLines").data("kendoGrid");
+        grid.addRow();
+
+        var wnd = $("#PastSalesWindow").data("kendoWindow");
+        wnd.center().close();
+    }
+
+    //function onPastSalesSelectRow(e) {
+    //    var lookupGrid = this;
+    //    var item = lookupGrid.dataItem(lookupGrid.select());
+
+    //    ItemNo = item.No
+    //    Description = item.Description
+
+    //    var grid = $("#OrderLines").data("kendoGrid");
+    //    grid.addRow();
+
+    //    var wnd = $("#PastSalesWindow").data("kendoWindow");
+    //    wnd.center().close();
+    //};
+
+
+    //function onItemLookupSelectItem(e) {
+    //    var grid = this;
+    //    var item = grid.dataItem(grid.select());
+
+    //    orderLine.set("ItemNo", item.No);
+    //    orderLine.set("Description", item.Description);
+
+    //    $('#OrderLines').data('kendoGrid').editCell(cell);
+
+    //    var wnd = $("#ItemLookupWindow").data("kendoWindow");
+    //    wnd.center().close();
+    //};
+
+
+</script>
+
+
