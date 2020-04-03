@@ -42,13 +42,14 @@
                       End Sub).Render()
         End Code
 
-        <p>
-            @Html.Kendo.Button().Content("Update").Name("General")
-            @Html.Kendo.Button().Content("Cancel").Name("Cancel").HtmlAttributes(New With {.onClick = "backtoIndex();return false;"})
-            @Html.Kendo.Button().Content("Email").Name("Email").HtmlAttributes(New With {.onClick = "onEmailClick();return false;"})
+     <p>
+         @Html.Kendo.Button().Content("Back").Name("Cancel").HtmlAttributes(New With {.onClick = "history.back();return false;"})
+         @*@Html.Kendo.Button().Content("Update").Name("General")
+         @Html.Kendo.Button().Content("Cancel").Name("Cancel").HtmlAttributes(New With {.onClick = "backtoIndex();return false;"})*@
+         @Html.Kendo.Button().Content("Email").Name("Email").HtmlAttributes(New With {.onClick = "onEmailClick();return false;"})
 
-            <!-- Html.Kendo.Button().Content("Cancel").Name("Cancel").HtmlAttributes(New With {.onClick = "history.back();return false;"}) -->
-        </p>
+         <!-- Html.Kendo.Button().Content("Cancel").Name("Cancel").HtmlAttributes(New With {.onClick = "history.back();return false;"}) -->
+     </p>
     </fieldset>
             End Using
 

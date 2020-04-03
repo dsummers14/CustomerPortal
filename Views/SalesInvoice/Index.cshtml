@@ -3,7 +3,7 @@
     
 }
 
-
+<h2>Sales Invoices</h2>
 
 <div class="container-fluid">
     <div class="row">
@@ -28,16 +28,18 @@
         .HtmlAttributes(new {style = "height:550px;"})
         .DataSource(dataSource => dataSource
         .Custom()
+        .Sort(s => s.Add("number"))
          .Type("odata-v4")
           .Transport(transport =>
           {
-        transport.Read(read => read.Url("/oData/SalesInvoices"));
+        transport.Read(read => read.Url("/oData/SalesInvoices")
+        );
     })
-        .PageSize(3)
+        .PageSize(20)
         .ServerPaging(true)
         .ServerSorting(true)
         .ServerFiltering(true)
         ))
         </div>
     </div>
-</div>
+</div

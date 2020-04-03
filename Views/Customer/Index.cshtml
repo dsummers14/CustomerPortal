@@ -1,7 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Customers Page";
+    ViewBag.Title = "Customers";
 }
 
+<h2>Customers</h2>
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-18 col-md-12">
@@ -22,16 +23,17 @@
         .HtmlAttributes(new { style = "height:550px;" })
         .DataSource(dataSource => dataSource
         .Custom()
-         .Type("odata-v4")
-          .Transport(transport =>
+        .Sort(s => s.Add("number"))
+        .Type("odata-v4")
+        .Transport(transport =>
           {
               transport.Read(read => read.Url("/oData/Customers"));
           })
-        .PageSize(3)
+        .PageSize(20)
         .ServerPaging(true)
         .ServerSorting(true)
         .ServerFiltering(true)
         ))
         </div>
     </div>
-</div>
+</d

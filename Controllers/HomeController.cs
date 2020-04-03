@@ -14,5 +14,12 @@ namespace CustomerPortal.Controllers
 
             return View();
         }
+        public ActionResult Error()
+        {
+            ViewBag.Title = "Home Page";
+
+            return View();
+        }
+
     }
 }
