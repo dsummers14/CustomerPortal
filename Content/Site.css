@@ -15,3 +15,30 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#profile-options {
+    display: none;
+    z-index: 100;
+    background-color: rgb(238, 238, 238);
+    position: absolute;
+    border: solid;
+    border-color: rgb(128, 128, 128);
+    border-width: thin;
+}
+
+.profile-link {
+    /*display:table-cell;*/
+    white-space: nowrap;
+}
+
+.profile-links {
+    list-style-type: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    /*display:table-row;*/
+}
+
+#profile-link {
+    cursor: pointer;
+}
+

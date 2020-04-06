@@ -1,6 +1,8 @@
-﻿@{
+﻿@using System.Security.Claims
+
+@{
     ViewBag.Title = "Sales Invoice";
-    
+    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerId").Select(s => s.Value).FirstOrDefault();
 }
 
 <h2>Sales Invoices</h2>
@@ -13,8 +15,8 @@
         .Columns(columns =>
         {
             columns.Bound(p => p.number).ClientTemplate(Html.ActionLink("#=number#", "Details",new {id = "#=id#"}).ToHtmlString()).Title("Invoice No");
-            columns.Bound(p => p.customerNumber);
-            columns.Bound(p => p.customerName);
+            columns.Bound(p => p.customerNumber).Filterable(false).Sortable(false);
+            columns.Bound(p => p.customerName).Filterable(false).Sortable(false);
             columns.Bound(p => p.invoiceDate).Format("{0:MM/dd/yyyy}");
             columns.Bound(p => p.shippingPostalAddress.city).Filterable(false).Sortable(false);
             columns.Bound(p => p.shippingPostalAddress.state).Filterable(false).Sortable(false);
@@ -27,14 +29,14 @@
         .Filterable()
         .HtmlAttributes(new {style = "height:550px;"})
         .DataSource(dataSource => dataSource
-        .Custom()
-        .Sort(s => s.Add("number"))
-         .Type("odata-v4")
+          .Custom()
+          .Sort(s => s.Add("number"))
+          .Filter(f => f.Add(a => a.customerNumber).IsEqualTo(gcustomerNumber))
+          .Type("odata-v4")
           .Transport(transport =>
-          {
-        transport.Read(read => read.Url("/oData/SalesInvoices")
-        );
-    })
+            {
+              transport.Read(read => read.Url("/oData/SalesInvoices"));
+            })
         .PageSize(20)
         .ServerPaging(true)
         .ServerSorting(true)
@@ -42,4 +44,4 @@
         ))
         </div>
     </div>
-</div
+</div>

@@ -1,43 +1,51 @@
-﻿@{
+﻿@using System.Security.Claims
+
+@{
     ViewBag.Title = "Sales Orders";
+
+    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerId").Select(s => s.Value).FirstOrDefault();
 }
+
 
 <h2>Sales Orders</h2>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-18 col-md-12">
-            @(Html.Kendo().Grid<Microsoft.NAV.salesOrder>()
-        .Name("grid")
-        .Columns(columns =>
-        {
-            columns.Bound(p => p.number).ClientTemplate(Html.ActionLink("#=number#", "Details",new {id = "#=id#"}).ToHtmlString()).Title("Order No");
-            columns.Bound(p => p.customerNumber);
-            columns.Bound(p => p.customerName);
-            columns.Bound(p => p.orderDate).Format("{0:MM/dd/yyyy}");
-            columns.Bound(p => p.shippingPostalAddress.city).Filterable(false).Sortable(false);
-            columns.Bound(p => p.shippingPostalAddress.state).Filterable(false).Sortable(false);
-            columns.Bound(p => p.totalAmountIncludingTax);
+            @(Html.Kendo().Grid<Microsoft.NAV.salesOrder>
+                ()
+                .Name("grid")
+                .Columns(columns =>
+                {
+                columns.Bound(p => p.number).ClientTemplate(Html.ActionLink("#=number#", "Details",new {id = "#=id#"}).ToHtmlString()).Title("Order No");
+                columns.Bound(p => p.customerNumber).Filterable(false).Sortable(false);
+                columns.Bound(p => p.customerName).Filterable(false).Sortable(false);
+                columns.Bound(p => p.orderDate).Format("{0:MM/dd/yyyy}");
+                columns.Bound(p => p.shippingPostalAddress.city).Filterable(false).Sortable(false);                
+                columns.Bound(p => p.shippingPostalAddress.state).Filterable(false).Sortable(false);
+                columns.Bound(p => p.totalAmountIncludingTax);
 
-        })
-        .Pageable()
-        .Sortable()
-        .Scrollable()
-        .Filterable()
-        .HtmlAttributes(new {style = "height:550px;"})
-        .DataSource(dataSource => dataSource
-        .Custom()
-        .Sort(s => s.Add("number"))
-        .Type("odata-v4")
-        .Transport(transport =>
-          {
-           transport.Read(read => read.Url("/oData/SalesOrders"));
-          })
-        .PageSize(20)
-        .ServerPaging(true)
-        .ServerSorting(true)
-        .ServerFiltering(true)
-        ))
+                })
+                .Pageable()
+                .Sortable()
+                .Scrollable()
+                .Filterable()
+                .HtmlAttributes(new {style = "height:550px;"})
+                .DataSource(dataSource => dataSource
+                .Custom()
+                .Sort(s => s.Add("number"))
+                .Filter(f => f.Add(a  => a.customerNumber).IsEqualTo(gcustomerNumber))
+                .Type("odata-v4")
+                .Transport(transport =>
+                {
+                transport.Read(read => read.Url("/oData/SalesOrders"));
+                })
+                .PageSize(20)
+                .ServerPaging(true)
+                .ServerSorting(true)
+                .ServerFiltering(true)
+                ))
         </div>
     </div>
 </div>
+@*.Data("function() {return {'$filter': 'customerId eq " + "a89a1142-aa25-4879-a4d8-cd5e6a357fd1" + "' }}")*@
