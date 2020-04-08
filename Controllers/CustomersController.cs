@@ -19,10 +19,7 @@ namespace WebApplication1.Controllers
             try
             {
              iQuery = (IQueryable<customer>)queryOptions.ApplyTo(iWebService.customers);
-                //var Customer = (from Cust in iWebService.customers where Cust.number == "10000" select Cust).FirstOrDefault();
-
-                //var CreateDate = DateTime.Parse(Customer.lastModifiedDateTime.ToString());
-
+        
             }
             catch (Exception ex)
             {

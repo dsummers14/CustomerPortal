@@ -79,24 +79,6 @@ namespace CustomerPortal.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("jHCS3azkxQJAN0MnzACcF469DyUnd5GxUuXn4qQHlY8=")]
-        public string Password {
-            get {
-                return ((string)(this["Password"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("preview16")]
-        public string Environment {
-            get {
-                return ((string)(this["Environment"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("92226e37-ba60-4082-93d0-8a400023c938")]
         public string TenantId {
             get {
@@ -106,10 +88,64 @@ namespace CustomerPortal.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ee7bd08b-fb52-ea11-bba2-00155df3a615")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ct/95EI1U/jJh1+N9Mnaie29VBJ1gvI4S9rn0XTY/5g=")]
+        public string Password {
+            get {
+                return ((string)(this["Password"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("production")]
+        public string Environment {
+            get {
+                return ((string)(this["Environment"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("746819eb-4ab7-404f-b364-2f3288ff69fa")]
         public string CompanyId {
             get {
                 return ((string)(this["CompanyId"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("94e2d1c6-bfee-4efe-b57a-ee1faed5df91")]
+        public string ManagementAppID {
+            get {
+                return ((string)(this["ManagementAppID"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ICPCustomerPortal1.onmicrosoft.com")]
+        public string TenantURL {
+            get {
+                return ((string)(this["TenantURL"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("E]5kauaTI?ILPb9?oUY=c7T9.7uzTKVc")]
+        public string ManagementAppClientSecret {
+            get {
+                return ((string)(this["ManagementAppClientSecret"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("39d2bd21-d67b-4808-91ff-a985c6eb1398")]
+        public string B2cExtensionAppClientId {
+            get {
+                return ((string)(this["B2cExtensionAppClientId"]));
             }
         }
     }

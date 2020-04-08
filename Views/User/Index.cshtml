@@ -1,23 +1,22 @@
-﻿@using System.Security.Claims
+﻿@using b2c_ms_graph;
+@using System.Security.Claims
 
 @{
-    ViewBag.Title = "Customers";
+    ViewBag.Title = "Users";
     var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerId").Select(s => s.Value).FirstOrDefault();
+    var gwebRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
 }
 
-<h2>Customers</h2>
+<h2>Users</h2>
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-18 col-md-12">
-            @(Html.Kendo().Grid<Microsoft.NAV.customer>()
+            @(Html.Kendo().Grid<UserModel>()
         .Name("grid")
         .Columns(columns =>
         {
-            columns.Bound(p => p.number).Filterable(false);
-            columns.Bound(p => p.displayName);
-            columns.Bound(p => p.lastModifiedDateTime).Format("{0:MM/dd/yyyy}");
-            columns.Bound(p => p.address.city).Filterable(false).Sortable(false);
-            columns.Bound(p => p.address.state).Filterable(false).Sortable(false);
+            columns.Bound(p => p.DisplayName);
+            columns.Bound(p => p.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerId).Title("Customer Number").Visible(gwebRole == "1");
         })
         .Pageable()
         .Sortable()
@@ -26,12 +25,12 @@
         .HtmlAttributes(new { style = "height:550px;" })
         .DataSource(dataSource => dataSource
         .Custom()
-        .Sort(s => s.Add("number"))
-        .Filter(f => f.Add(a => a.number).IsEqualTo(gcustomerNumber))
+        .Sort(s => s.Add("DisplayName"))
+        .Filter(f => f.Add(a => a.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerId).IsEqualTo(gcustomerNumber))
         .Type("odata-v4")
         .Transport(transport =>
         {
-            transport.Read(read => read.Url("/oData/Customers"));
+            transport.Read(read => read.Url("/oData/Users"));
         })
         .PageSize(20)
         .ServerPaging(true)
@@ -40,4 +39,4 @@
         ))
         </div>
     </div>
-    </d
+</div>

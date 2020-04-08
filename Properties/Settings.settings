@@ -20,17 +20,29 @@
     <Setting Name="Host" Type="System.String" Scope="Application">
       <Value Profile="(Default)">api.businesscentral.dynamics.com</Value>
     </Setting>
-    <Setting Name="Password" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">jHCS3azkxQJAN0MnzACcF469DyUnd5GxUuXn4qQHlY8=</Value>
-    </Setting>
-    <Setting Name="Environment" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">preview16</Value>
-    </Setting>
     <Setting Name="TenantId" Type="System.String" Scope="Application">
       <Value Profile="(Default)">92226e37-ba60-4082-93d0-8a400023c938</Value>
     </Setting>
+    <Setting Name="Password" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ct/95EI1U/jJh1+N9Mnaie29VBJ1gvI4S9rn0XTY/5g=</Value>
+    </Setting>
+    <Setting Name="Environment" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">production</Value>
+    </Setting>
     <Setting Name="CompanyId" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">ee7bd08b-fb52-ea11-bba2-00155df3a615</Value>
+      <Value Profile="(Default)">746819eb-4ab7-404f-b364-2f3288ff69fa</Value>
+    </Setting>
+    <Setting Name="ManagementAppID" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">94e2d1c6-bfee-4efe-b57a-ee1faed5df91</Value>
+    </Setting>
+    <Setting Name="TenantURL" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ICPCustomerPortal1.onmicrosoft.com</Value>
+    </Setting>
+    <Setting Name="ManagementAppClientSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">E]5kauaTI?ILPb9?oUY=c7T9.7uzTKVc</Value>
+    </Setting>
+    <Setting Name="B2cExtensionAppClientId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">39d2bd21-d67b-4808-91ff-a985c6eb1398</Value>
     </Setting>
   </Settings>
 </SettingsFile>

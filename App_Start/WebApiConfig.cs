@@ -31,6 +31,7 @@ namespace CustomerPortal
             builder.EntitySet<Microsoft.NAV.salesOrderLine>("SalesOrderLines");
             builder.EntitySet<Microsoft.NAV.salesInvoice>("SalesInvoices");
             builder.EntitySet<Microsoft.NAV.salesInvoiceLine>("SalesInvoiceLines");
+            builder.EntitySet<Microsoft.Graph.User>("Users");
             config.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: "oData",
