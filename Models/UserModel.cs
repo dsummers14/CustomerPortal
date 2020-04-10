@@ -16,6 +16,10 @@ namespace b2c_ms_graph
 
         public int extension_39d2bd21d67b480891ffa985c6eb1398_WebRole { get; set; }
 
+        public string extension_39d2bd21d67b480891ffa985c6eb1398_TenantId { get; set; }
+
+        public string extension_39d2bd21d67b480891ffa985c6eb1398_CompanyId { get; set; }
+
         public void SetB2CProfile(string TenantName)
         {
             this.PasswordProfile = new PasswordProfile

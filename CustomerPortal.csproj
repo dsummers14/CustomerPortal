@@ -513,6 +513,17 @@
     <Content Include="Views\SalesInvoice\_InvoiceShipping.vbhtml" />
     <Content Include="Views\SalesInvoice\_SalesInvoiceDetail.vbhtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\CreateUserProfile.vbhtml" />
+    <Content Include="Views\User\Details.vbhtml" />
+    <Content Include="Views\User\RequestUserPasswordReset.vbhtml" />
+    <Content Include="Views\User\UserPasswordReset.vbhtml" />
+    <Content Include="Views\User\_CreateUserProfileDetails.vbhtml" />
+    <Content Include="Views\User\_CreateUserProfileGeneral.vbhtml" />
+    <Content Include="Views\User\_UserProfileDetails.vbhtml" />
+    <Content Include="Views\User\_UserProfileGeneral.vbhtml" />
+    <Content Include="Views\User\_UserProfileGrid.vbhtml" />
+    <Content Include="Views\User\_UserProfilePassword.vbhtml" />
+    <Content Include="Views\User\_UserRoleGrid.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

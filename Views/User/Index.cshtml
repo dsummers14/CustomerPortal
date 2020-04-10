@@ -12,12 +12,23 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-18 col-md-12">
-            @(Html.Kendo().Grid<UserModel>()
+            @(Html.Kendo().Grid<UserModel>
+        ()
         .Name("grid")
+        .Editable(e => e.Mode(GridEditMode.InLine))
         .Columns(columns =>
         {
+            columns.Bound(p => p.Id).Visible(false);
             columns.Bound(p => p.DisplayName);
+            columns.Bound(p => p.extension_39d2bd21d67b480891ffa985c6eb1398_TenantId).Title("Tenant Id").Visible(!filterCustomer);
+            columns.Bound(p => p.extension_39d2bd21d67b480891ffa985c6eb1398_CompanyId).Title("CompanyId").Visible(!filterCustomer);
+            columns.Bound(p => p.extension_39d2bd21d67b480891ffa985c6eb1398_WebRole).Title("Web Role").Visible(!filterCustomer);
             columns.Bound(p => p.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber).Title("Customer Number").Visible(!filterCustomer);
+            columns.Command(c => 
+            { 
+               c.Edit(); 
+               c.Destroy(); 
+            });
         })
         .Pageable()
         .Sortable()
@@ -27,23 +38,34 @@
         .DataSource(dataSource => dataSource
         .Custom()
         .Sort(s => s.Add("DisplayName"))
-         .Filter(f =>
+        .Filter(f =>
+        {
+            if (filterCustomer)
             {
-                if (filterCustomer)
-                {
-                    f.Add(a => a.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber).IsEqualTo(gcustomerNumber);
-                }
-            })
+                f.Add(a => a.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber).IsEqualTo(gcustomerNumber);
+            }
+        })
         .Type("odata-v4")
         .Transport(transport =>
         {
             transport.Read(read => read.Url("/oData/Users"));
+            transport.Update(update => update.Url("/oData/Users/PutUser"));
         })
+        .Schema(s =>
+            s.Model(m =>
+            {
+                m.Id(i => i.Id);
+                m.Field(f => f.DisplayName).Editable(true);
+                m.Field(f => f.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber).Editable(true);
+                m.Field(f => f.extension_39d2bd21d67b480891ffa985c6eb1398_TenantId).Editable(true);
+            })
+        )
         .PageSize(20)
         .ServerPaging(true)
         .ServerSorting(true)
         .ServerFiltering(true)
-        ))
-        </div>
+        )
+    ))
+</div>
     </div>
 </div>

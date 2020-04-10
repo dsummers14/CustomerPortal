@@ -14,28 +14,32 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Resources;
 using CustomerPortal.Properties;
+using System.Web.Http;
 
 namespace WebApplication1.Controllers
 {
-    public  class UsersController : ODataController {
+    public  class UsersController : ODataController 
+    {
+
+      GraphServiceClient graphClient = GraphClient.CreateGraphClient();
+      string customerNumberAttributeName = B2cCustomAttributeHelper.GetCompleteAttributeName("CustomerNumber");
+      string webRoleAttributeName = B2cCustomAttributeHelper.GetCompleteAttributeName("WebRole");
+      string TenantIdAttributeName = B2cCustomAttributeHelper.GetCompleteAttributeName("TenantId");
+      string CompanyIdAttributeName = B2cCustomAttributeHelper.GetCompleteAttributeName("CompanyId");
 
 
         public async Task<IGraphServiceUsersCollectionPage> GetUsers(ODataQueryOptions queryOptions)
         {
             IGraphServiceUsersCollectionPage requestTask = null;
             string filter = queryOptions.Filter == null ? "" : queryOptions.Filter.RawValue;
-            string customerIdAttributeName = B2cCustomAttributeHelper.GetCompleteAttributeName("CustomerNumber");
-            string webRoleAttributeName = B2cCustomAttributeHelper.GetCompleteAttributeName("WebRole");
-
+          
             try
             {
-                var graphClient = GraphClient.CreateGraphClient();
-                
                 requestTask = await graphClient.Users
-                .Request()
-                .Filter(filter)
-                .Select($"id,displayName,identities,{customerIdAttributeName},{webRoleAttributeName}")
-                .GetAsync();
+                                               .Request()
+                                               .Filter(filter)
+                                               .Select($"id,displayName,identities,{customerNumberAttributeName},{webRoleAttributeName},{ TenantIdAttributeName},{ CompanyIdAttributeName}")
+                                               .GetAsync();
 
             }
             catch (Exception ex)
@@ -45,11 +49,79 @@ namespace WebApplication1.Controllers
             
             return requestTask;
         }
-         
 
+        public async Task<User> GetUser(string userId)
+        {
+            User UserTask = null;
+
+            try
+            {
+               UserTask = await graphClient.Users[userId]
+                                           .Request()
+                                           .GetAsync();
+            }
+            catch (Exception ex)
+            {
+                //return ex
+            }
+
+            return UserTask;
         }
 
-     }
+        public async Task<User> PostUser(User user)
+        {
+            User UserTask = null;
 
+            try
+            {
+                UserTask = await graphClient.Users
+                                            .Request()
+                                            .AddAsync(user);
+            }
+            catch (Exception ex)
+            {
+                //return ex
+            }
 
-           // var Customers = from Cust in iWebService.customers where Cust.number == "10000" select Cust;
+            return UserTask;
+        }
+        public async Task<User> PutUser([FromBody] User user)
+        {
+            var newUser = new User();
+            User UserTask = null;
+
+            try
+            {
+
+               newUser.AdditionalData = user.AdditionalData;
+
+                UserTask = await graphClient.Users[user.Id]
+                                            .Request()
+                                            .UpdateAsync(newUser);
+            }
+            catch (Exception ex)
+            {
+                //return ex
+            }
+
+            return UserTask;
+        }
+
+        public async void DeleteUser(string  userId)
+        {
+            try
+            {
+                await graphClient.Users[userId]
+                                 .Request()
+                                 .DeleteAsync();
+            }
+            catch (Exception ex)
+            {
+                //return ex
+            }
+        }
+
+    }
+}
+     
+
