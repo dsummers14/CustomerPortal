@@ -3,8 +3,9 @@
 @{
     ViewBag.Title = "Sales Orders";
 
-    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerId").Select(s => s.Value).FirstOrDefault();
+    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerNumber").Select(s => s.Value).FirstOrDefault();
     var gwebRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
+    bool filterCustomer = (gwebRole != "1"); 
 }
 
 
@@ -19,11 +20,13 @@
             .Columns(columns =>
             {
                 columns.Bound(p => p.number).ClientTemplate(Html.ActionLink("#=number#", "Details", new { id = "#=id#" }).ToHtmlString()).Title("Order No");
-                columns.Bound(p => p.customerNumber).Visible(gwebRole == "1");
-                columns.Bound(p => p.customerName).Visible(gwebRole == "1");
+                columns.Bound(p => p.customerNumber).Visible(!filterCustomer);
+                columns.Bound(p => p.customerName).Visible(!filterCustomer);
+                columns.Bound(p => p.externalDocumentNumber);
                 columns.Bound(p => p.orderDate).Format("{0:MM/dd/yyyy}");
-                columns.Bound(p => p.shippingPostalAddress.city).Filterable(false).Sortable(false);
-                columns.Bound(p => p.shippingPostalAddress.state).Filterable(false).Sortable(false);
+                columns.Bound(p => p.status);
+                columns.Bound(p => p.shippingPostalAddress.city).Filterable(false).Sortable(false).Title("Ship-To City");
+                columns.Bound(p => p.shippingPostalAddress.state).Filterable(false).Sortable(false).Title("Ship-To State");
                 columns.Bound(p => p.totalAmountIncludingTax);
 
             })
@@ -35,12 +38,12 @@
             .DataSource(dataSource => dataSource
             .Custom()
             .Sort(s => s.Add("number"))
-            .Filter(f => 
-            { 
-                if (gwebRole != "1") 
-                { 
-                    f.Add(a => a.customerNumber).IsEqualTo(gcustomerNumber); 
-                } 
+            .Filter(f =>
+            {
+                if (filterCustomer)
+                {
+                    f.Add(a => a.customerNumber).IsEqualTo(gcustomerNumber);
+                }
             })
             .Type("odata-v4")
             .Transport(transport =>

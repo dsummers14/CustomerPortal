@@ -48,6 +48,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Kendo.Mvc">
       <HintPath>lib\KENDOUIMVC\2020.1.219.545.Trial\Kendo.Mvc.dll</HintPath>
     </Reference>
@@ -177,6 +183,7 @@
       <HintPath>packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Diagnostics.DiagnosticSource.4.6.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -216,6 +223,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Spatial, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\System.Spatial.5.8.4\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
@@ -309,6 +317,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountInfo.cs">
+      <DependentUpon>iCeptsWebService.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -342,6 +353,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="BC365Tenant.cs">
+      <DependentUpon>iCeptsWebService.tt</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\BC365WebAPI\BC365WebAPIReference.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -360,6 +374,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="iCeptsWebService.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>iCeptsWebService.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="iCeptsWebService.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>iCeptsWebService.tt</DependentUpon>
+    </Compile>
+    <Compile Include="iCeptsWebService.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>iCeptsWebService.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\customer.cs" />
     <Compile Include="Models\salesInvoice.cs" />
@@ -368,6 +397,9 @@
     <Compile Include="Models\salesOrderLine.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UsersModel.cs" />
+    <Compile Include="NavAPI.cs">
+      <DependentUpon>iCeptsWebService.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -419,10 +451,27 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="appsettings.json" />
+    <EntityDeploy Include="iCeptsWebService.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>iCeptsWebService.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="iCeptsWebService.edmx.diagram">
+      <DependentUpon>iCeptsWebService.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="iCeptsWebService.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>iCeptsWebService.edmx</DependentUpon>
+      <LastGenOutput>iCeptsWebService.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="iCeptsWebService.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>iCeptsWebService.edmx</DependentUpon>
+      <LastGenOutput>iCeptsWebService.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.css" />
@@ -456,7 +505,6 @@
     <Content Include="Views\SalesOrder\_OrderLinesToolBar.vbhtml" />
     <Content Include="Views\SalesOrder\_OrderShipping.vbhtml" />
     <Content Include="Views\SalesOrder\_SalesOrderDetail.vbhtml" />
-    <Content Include="Views\SalesOrder\_SalesOrderGrid.vbhtml" />
     <Content Include="Views\SalesInvoice\Details.vbhtml" />
     <Content Include="Views\SalesInvoice\Index.cshtml" />
     <Content Include="Views\SalesInvoice\_InvoiceGeneral.vbhtml" />
@@ -477,6 +525,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

@@ -1,4 +1,8 @@
-﻿@(Html.Kendo().Grid<Microsoft.NAV.salesInvoiceLine>()
+﻿@{
+    Guid? documentId = (Guid?)Model.id;
+}
+
+@(Html.Kendo().Grid<Microsoft.NAV.salesInvoiceLine>()
         .Name("grid")
         .Columns(columns =>
         {
@@ -13,16 +17,16 @@
         .Pageable()
         .Sortable()
         .Scrollable()
-        .Filterable()
         .HtmlAttributes(new {style = "height:550px;"})
         .DataSource(dataSource => dataSource
         .Custom()
-         .Type("odata-v4")
-          .Transport(transport =>
-          {
-              transport.Read(read => read.Url("/oData/SalesInvoiceLines").Data("function() {return {'$filter': 'documentId eq " + Model.id + "' }}"));
-          })
-        .PageSize(1)
+       // .Filter(f => f.Add(a => a.).IsEqualTo(documentId))
+        .Type("odata-v4")
+        .Transport(transport =>
+        {
+            transport.Read(read => read.Url("/oData/SalesInvoiceLines").Data("function() {return {'$filter': 'documentId eq " + Model.id + "' }}")); ;
+        })
+        .PageSize(10)
         .ServerPaging(true)
         .ServerSorting(true)
         .ServerFiltering(true)
@@ -40,7 +44,7 @@
                                 End Function) _
                                                                                                         .Render()) *@
 
-@*"function() {return {'$filter': 'documentId eq " + Model.id  + "' }}"
+@*"function() {return {'$filter': 'documentId eq " + Model.id  + "' }}"f
 "function() {return {'documentId': '" + Model.id  + "' }}"*@
 
 <script type="text/javascript">

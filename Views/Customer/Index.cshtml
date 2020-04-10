@@ -2,7 +2,9 @@
 
 @{
     ViewBag.Title = "Customers";
-    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerId").Select(s => s.Value).FirstOrDefault();
+    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerNumber").Select(s => s.Value).FirstOrDefault();
+    var gwebRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
+    bool filterCustomer = (gwebRole != "1");
 }
 
 <h2>Customers</h2>
@@ -13,9 +15,9 @@
         .Name("grid")
         .Columns(columns =>
         {
-            columns.Bound(p => p.number).Filterable(false);
-            columns.Bound(p => p.displayName);
-            columns.Bound(p => p.lastModifiedDateTime).Format("{0:MM/dd/yyyy}");
+            columns.Bound(p => p.number).Filterable(!filterCustomer);
+            columns.Bound(p => p.displayName).Filterable(!filterCustomer);
+            columns.Bound(p => p.lastModifiedDateTime).Format("{0:MM/dd/yyyy}").Filterable(!filterCustomer);
             columns.Bound(p => p.address.city).Filterable(false).Sortable(false);
             columns.Bound(p => p.address.state).Filterable(false).Sortable(false);
         })
@@ -27,7 +29,13 @@
         .DataSource(dataSource => dataSource
         .Custom()
         .Sort(s => s.Add("number"))
-        .Filter(f => f.Add(a => a.number).IsEqualTo(gcustomerNumber))
+        .Filter(f =>
+            {
+                if (filterCustomer)
+                {
+                    f.Add(a => a.number).IsEqualTo(gcustomerNumber);
+                }
+            })
         .Type("odata-v4")
         .Transport(transport =>
         {

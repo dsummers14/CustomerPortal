@@ -24,7 +24,7 @@ namespace WebApplication1.Controllers
         {
             IGraphServiceUsersCollectionPage requestTask = null;
             string filter = queryOptions.Filter == null ? "" : queryOptions.Filter.RawValue;
-            string customerIdAttributeName = B2cCustomAttributeHelper.GetCompleteAttributeName("CustomerId");
+            string customerIdAttributeName = B2cCustomAttributeHelper.GetCompleteAttributeName("CustomerNumber");
             string webRoleAttributeName = B2cCustomAttributeHelper.GetCompleteAttributeName("WebRole");
 
             try

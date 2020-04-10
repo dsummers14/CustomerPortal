@@ -17,6 +17,7 @@ namespace WebApplication1.Controllers
 
             try
             {
+                
               iQuery = (IQueryable<salesInvoiceLine>)queryOptions.ApplyTo(iWebService.salesInvoiceLines);
             }
             catch (Exception ex)

@@ -1,11 +1,17 @@
 ﻿using System;
 using CustomerPortal.Properties;
 using Microsoft.NAV;
+using System.Security.Claims;
+using System.Linq;
+using CustomerPortal; 
 
 public static class ODataWebService
 {
+    private static string vCompanyID = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CompanyId").Select(s => s.Value).FirstOrDefault();
+    private static iCeptsWebServicesEntities dbContext = new iCeptsWebServicesEntities();
+    private static string TenantId = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_TenantId").Select(s => s.Value).FirstOrDefault();
+    private static BC365Tenant TenantContext = dbContext.BC365Tenant.Where(t => t.TenantId == TenantId).FirstOrDefault();
 
-    private static string vCompanyID = Settings.Default.CompanyId;
     public static string BuildODataUrl( bool pByCompany = true)
     {
         string iUrl = "";
@@ -15,30 +21,28 @@ public static class ODataWebService
             if (string.IsNullOrEmpty(vCompanyID))
             {
                 company iCompany = null;
-              // iCompany = GetEntityCollection<companies>(string.Format("$filter=name eq '{0}'", Settings.Default.CompanyName), false).value.FirstOrDefault();
+               //iCompany = GetEntityCollection<companies>(string.Format("$filter=name eq '{0}'", Settings.Default.CompanyName), false).value.FirstOrDefault();
 
                 if (iCompany != null)
                     vCompanyID = iCompany.id.ToString();
             }
 
-            iUrl = Settings.Default.Transport + Settings.Default.Host + "/V2.0/" + Settings.Default.TenantId + "/" + Settings.Default.Environment + "/" + Settings.Default.apiVersion + string.Format("/companies({0})/", vCompanyID);
+            iUrl = Settings.Default.Transport + Settings.Default.Host + "/V2.0/" + TenantId + "/" + TenantContext.Environment + "/" + TenantContext.APIVersion + string.Format("/companies({0})/", vCompanyID);
         }
         else
-            iUrl = Settings.Default.Transport + Settings.Default.Host + "/V2.0/" + Settings.Default.TenantId + "/" + Settings.Default.Environment + "/" + Settings.Default.apiVersion;
+            iUrl = Settings.Default.Transport + Settings.Default.Host + "/V2.0/" + TenantId + "/" + TenantContext.Environment+ "/" + TenantContext.APIVersion;
 
         return iUrl;
     }
 
    public static DateTime EdmDateToDateTime(Microsoft.OData.Edm.Date? pEdmDate)
     {
-    
-
-        return DateTime.Parse(pEdmDate.ToString());
+            return DateTime.Parse(pEdmDate.ToString());
     }
 
     public static System.Net.ICredentials CreateCredentials(string pWSUrl)
     {
-        System.Net.NetworkCredential iCredential = new System.Net.NetworkCredential(Settings.Default.Username, Settings.Default.Password);
+        System.Net.NetworkCredential iCredential = new System.Net.NetworkCredential(TenantContext.UserName, TenantContext.Password);
         System.Net.ICredentials iCredentials = iCredential.GetCredential(new Uri(pWSUrl), "Basic");
 
         return iCredentials;

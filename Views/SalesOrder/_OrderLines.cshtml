@@ -13,16 +13,15 @@
         .Pageable()
         .Sortable()
         .Scrollable()
-        .Filterable()
         .HtmlAttributes(new {style = "height:550px;"})
         .DataSource(dataSource => dataSource
         .Custom()
          .Type("odata-v4")
           .Transport(transport =>
           {
-              transport.Read(read => read.Url("/oData/SalesOrderLines").Data("function() {return {'$filter': 'documentId eq " + Model.id + "' }}"));
-          })
-        .PageSize(1)
+          transport.Read(read => read.Url("/oData/SalesOrderLines").Data("function() {return {'$filter': 'documentId eq " + Model.id + "' }}"));  ;
+})
+        .PageSize(10)
         .ServerPaging(true)
         .ServerSorting(true)
         .ServerFiltering(true)

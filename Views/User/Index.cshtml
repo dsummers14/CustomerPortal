@@ -3,8 +3,9 @@
 
 @{
     ViewBag.Title = "Users";
-    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerId").Select(s => s.Value).FirstOrDefault();
+    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerNumber").Select(s => s.Value).FirstOrDefault();
     var gwebRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
+    bool filterCustomer = (gwebRole != "1");
 }
 
 <h2>Users</h2>
@@ -16,7 +17,7 @@
         .Columns(columns =>
         {
             columns.Bound(p => p.DisplayName);
-            columns.Bound(p => p.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerId).Title("Customer Number").Visible(gwebRole == "1");
+            columns.Bound(p => p.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber).Title("Customer Number").Visible(!filterCustomer);
         })
         .Pageable()
         .Sortable()
@@ -26,7 +27,13 @@
         .DataSource(dataSource => dataSource
         .Custom()
         .Sort(s => s.Add("DisplayName"))
-        .Filter(f => f.Add(a => a.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerId).IsEqualTo(gcustomerNumber))
+         .Filter(f =>
+            {
+                if (filterCustomer)
+                {
+                    f.Add(a => a.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber).IsEqualTo(gcustomerNumber);
+                }
+            })
         .Type("odata-v4")
         .Transport(transport =>
         {

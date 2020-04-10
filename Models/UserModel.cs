@@ -11,7 +11,7 @@ namespace b2c_ms_graph
         [JsonProperty(PropertyName = "password", NullValueHandling = NullValueHandling.Ignore)]
         public string Password { get; set; }
 
-        public string extension_39d2bd21d67b480891ffa985c6eb1398_CustomerId { get; set; }
+        public string extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber { get; set; }
 
 
         public int extension_39d2bd21d67b480891ffa985c6eb1398_WebRole { get; set; }

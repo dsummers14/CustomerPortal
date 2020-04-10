@@ -2,8 +2,11 @@
 
 @{
     ViewBag.Title = "Sales Invoice";
-    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerId").Select(s => s.Value).FirstOrDefault();
-}
+
+    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerNumber").Select(s => s.Value).FirstOrDefault();
+    var gwebRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
+    bool filterCustomer = (gwebRole != "1"); 
+ }
 
 <h2>Sales Invoices</h2>
 
@@ -31,7 +34,13 @@
         .DataSource(dataSource => dataSource
           .Custom()
           .Sort(s => s.Add("number"))
-          .Filter(f => f.Add(a => a.customerNumber).IsEqualTo(gcustomerNumber))
+          .Filter(f =>
+            {
+                if (filterCustomer)
+                {
+                    f.Add(a => a.customerNumber).IsEqualTo(gcustomerNumber);
+                }
+            })
           .Type("odata-v4")
           .Transport(transport =>
             {
