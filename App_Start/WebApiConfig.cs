@@ -27,6 +27,8 @@ namespace CustomerPortal
 
             ODataModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Microsoft.NAV.customer>("Customers");
+            builder.EntitySet<Microsoft.NAV.salesQuote>("SalesQuotes");
+            builder.EntitySet<Microsoft.NAV.salesQuoteLine>("SalesQuoteLines");
             builder.EntitySet<Microsoft.NAV.salesOrder>("SalesOrders");
             builder.EntitySet<Microsoft.NAV.salesOrderLine>("SalesOrderLines");
             builder.EntitySet<Microsoft.NAV.salesInvoice>("SalesInvoices");

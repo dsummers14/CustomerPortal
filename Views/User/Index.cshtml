@@ -16,6 +16,7 @@
         ()
         .Name("grid")
         .Editable(e => e.Mode(GridEditMode.InLine))
+         .ToolBar(t => t.Custom().Text("Add User").Action("CreateUser", "User"))
         .Columns(columns =>
         {
             columns.Bound(p => p.Id).Visible(false);
@@ -24,10 +25,10 @@
             columns.Bound(p => p.extension_39d2bd21d67b480891ffa985c6eb1398_CompanyId).Title("CompanyId").Visible(!filterCustomer);
             columns.Bound(p => p.extension_39d2bd21d67b480891ffa985c6eb1398_WebRole).Title("Web Role").Visible(!filterCustomer);
             columns.Bound(p => p.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber).Title("Customer Number").Visible(!filterCustomer);
-            columns.Command(c => 
-            { 
-               c.Edit(); 
-               c.Destroy(); 
+            columns.Command(c =>
+            {
+                c.Edit();
+                c.Destroy();
             });
         })
         .Pageable()
@@ -50,6 +51,15 @@
         {
             transport.Read(read => read.Url("/oData/Users"));
             transport.Update(update => update.Url("/oData/Users/PutUser"));
+            transport.Create(create => create.Url("/oData/Users/PostUser"));
+            transport.Destroy(new
+            {
+                url = new Kendo.Mvc.ClientHandlerDescriptor
+                {
+                    HandlerName = @"function(data) {return '/User/DeleteUser/' + data.Id ;}"
+                }
+            });
+
         })
         .Schema(s =>
             s.Model(m =>
@@ -60,12 +70,39 @@
                 m.Field(f => f.extension_39d2bd21d67b480891ffa985c6eb1398_TenantId).Editable(true);
             })
         )
+        .Events(e => e.Error("error_handler")) 
         .PageSize(20)
         .ServerPaging(true)
         .ServerSorting(true)
         .ServerFiltering(true)
         )
     ))
-</div>
+        </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+
+
+    function onDetailsClick(e) {
+        e.preventDefault();
+        var UserProfile = this.dataItem($(e.currentTarget).closest("tr"));
+
+        window.location.href = '@Url.Action("Details","UserProfile")' + "?UserID=" + UserProfile.UserID;
+    }
+
+</script>

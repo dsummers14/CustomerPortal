@@ -1,44 +1,44 @@
-﻿@ModelType Microsoft.NAV.salesOrder
+﻿@ModelType Microsoft.NAV.salesQuote
 
 @Using Html.BeginForm
     @<fieldset>
-      
+
         @Code
             Html.Kendo.PanelBar() _
-               .Name("OrderPanelBar") _
+               .Name("QuotePanelBar") _
                .ExpandMode(PanelBarExpandMode.Multiple) _
                .Items(Sub(t)
                 t.Add() _
-    .Text("General") _
-    .Expanded(True) _
+.Text("General") _
+.Expanded(True) _
 .Content(Function(ct)
         @<div>
-            @Html.Partial("_OrderGeneral")
+            @Html.Partial("_QuoteGeneral")
         </div>
-         End Function)
+                   End Function)
                 t.Add() _
-     .Text("Lines") _
-     .Expanded(True) _
-     .Content(Function(ct)
+ .Text("Lines") _
+ .Expanded(True) _
+ .Content(Function(ct)
 @<div>
-    @Html.Partial("_OrderLines")
+    @Html.Partial("_QuoteLines")
 </div>
                         End Function)
                 t.Add() _
-  .Text("Invoicing") _
-  .Content(Function(ct)
+.Text("Invoicing") _
+.Content(Function(ct)
 @<div>
-    @Html.Partial("_OrderInvoicing")
+    @Html.Partial("_QuoteInvoicing")
 </div>
                      End Function)
                 t.Add() _
-            .Text("Shipping") _
-            .Content(Function(ct)
+        .Text("Shipping") _
+        .Content(Function(ct)
 @<div>
-    @Html.Partial("_OrderShipping")
+    @Html.Partial("_QuoteShipping")
 </div>
-                     End Function)
-                      End Sub).Render()
+                               End Function)
+                          End Sub).Render()
         End Code
 
      <p>
@@ -55,13 +55,13 @@
 @*@code
     Html.Kendo.Window() _
         .Name("EmailWindow") _
-        .Title("Email - Sales Order") _
+        .Title("Email - Sales Quote") _
         .Visible(False) _
         .Resizable(Sub(r) r.Enabled(True)) _
         .Draggable(True) _
         .Content(Function(ct)
         @<div>
-            @Html.Partial("_EmailWindow", New NaviAnywhere.EmailModel With {.Subject = "Sales Order " + Model.number,
+            @Html.Partial("_EmailWindow", New NaviAnywhere.EmailModel With {.Subject = "Sales Quote " + Model.number,
                                                                                           .EmailTo = NaviAnywhere.Customer.EmailAddreess(Model.customerNumber)})
         </div>
                  End Function) _

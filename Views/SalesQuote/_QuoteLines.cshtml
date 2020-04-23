@@ -1,4 +1,4 @@
-﻿@(Html.Kendo().Grid<Microsoft.NAV.salesOrderLine>()
+﻿@(Html.Kendo().Grid<Microsoft.NAV.salesQuoteLine>()
         .Name("grid")
         .Columns(columns =>
         {
@@ -19,8 +19,8 @@
          .Type("odata-v4")
           .Transport(transport =>
           {
-          transport.Read(read => read.Url("/oData/SalesOrderLines").Data("function() {return {'$filter': 'documentId eq " + Model.id + "' }}"));  
-           })
+          transport.Read(read => read.Url("/oData/SalesQuoteLines").Data("function() {return {'$filter': 'documentId eq " + Model.id + "' }}"));
+          })
         .PageSize(10)
         .ServerPaging(true)
         .ServerSorting(true)
@@ -44,7 +44,7 @@
 
 <script type="text/javascript">
 
-    var orderLine
+    var QuoteLine
     var ItemNo
     var Description
     // var cell
@@ -82,7 +82,7 @@
             });
             alert(message);
 
-            var grid = $("#OrderLines").data("kendoGrid");
+            var grid = $("#QuoteLines").data("kendoGrid");
             grid.dataSource.read();
         }
     }
@@ -91,7 +91,7 @@
         var thisItem = this.dataItem(e.item.index());
 
         var row = $(this.element).closest("tr");
-        var grid = $("#OrderLines").data("kendoGrid");
+        var grid = $("#QuoteLines").data("kendoGrid");
         var dataItem = grid.dataItem(row);
         dataItem.set("Description", thisItem.Description);
         e.sender.close();
@@ -99,9 +99,9 @@
 
     function onItemLookup(e) {
         var row = $(this.element).closest("tr");
-        var grid = $("#OrderLines").data("kendoGrid");
-        orderLine = grid.dataItem(row);
-        //cell = $('#OrderLines').find('tbody tr:eq(' + e.index + ') td:eq(1)');
+        var grid = $("#QuoteLines").data("kendoGrid");
+        QuoteLine = grid.dataItem(row);
+        //cell = $('#QuoteLines').find('tbody tr:eq(' + e.index + ') td:eq(1)');
         e.preventDefault();
 
         var wnd = $("#ItemLookupWindow").data("kendoWindow");
@@ -116,7 +116,7 @@
         ItemNo = Item.No;
         Description = Item.Description;
 
-        var grid = $("#OrderLines").data("kendoGrid");
+        var grid = $("#QuoteLines").data("kendoGrid");
         grid.addRow();
 
         var wnd = $("#ItemLookupWindow").data("kendoWindow");
@@ -135,7 +135,7 @@
         ItemNo = Item.No;
         Description = Item.Description;
 
-        var grid = $("#OrderLines").data("kendoGrid");
+        var grid = $("#QuoteLines").data("kendoGrid");
         grid.addRow();
 
         var wnd = $("#PastSalesWindow").data("kendoWindow");
@@ -149,7 +149,7 @@
     //    ItemNo = item.No
     //    Description = item.Description
 
-    //    var grid = $("#OrderLines").data("kendoGrid");
+    //    var grid = $("#QuoteLines").data("kendoGrid");
     //    grid.addRow();
 
     //    var wnd = $("#PastSalesWindow").data("kendoWindow");
@@ -161,10 +161,10 @@
     //    var grid = this;
     //    var item = grid.dataItem(grid.select());
 
-    //    orderLine.set("ItemNo", item.No);
-    //    orderLine.set("Description", item.Description);
+    //    QuoteLine.set("ItemNo", item.No);
+    //    QuoteLine.set("Description", item.Description);
 
-    //    $('#OrderLines').data('kendoGrid').editCell(cell);
+    //    $('#QuoteLines').data('kendoGrid').editCell(cell);
 
     //    var wnd = $("#ItemLookupWindow").data("kendoWindow");
     //    wnd.center().close();

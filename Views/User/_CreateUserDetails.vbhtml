@@ -12,10 +12,10 @@
                        .Expanded(True) _
                    .Content(Function(ct)
                                           @<div>
-                                              @Html.Partial("_CreateUserProfileGeneral", Model.UserProfileSEModel)
+                                              @Html.Partial("_CreateUserGeneral", Model)
                                            </div>     
                             End Function)
-                 End Sub).Render()
+               End Sub).Render()
 End Code
 
 <p>
@@ -31,7 +31,7 @@ End Using
 <script type="text/javascript">
 
     function backtoIndex() {
-        window.location.href = '@Url.Action("Index","UserProfile")';
+        window.location.href = '@Url.Action("Index", "User")';
         }
    
    

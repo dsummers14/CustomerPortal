@@ -358,6 +358,9 @@
     </Compile>
     <Compile Include="Connected Services\BC365WebAPI\BC365WebAPIReference.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\SalesQuoteLinesController.cs" />
+    <Compile Include="Controllers\SalesQuotesController.cs" />
+    <Compile Include="Controllers\SalesQuoteController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -393,6 +396,8 @@
     <Compile Include="Models\customer.cs" />
     <Compile Include="Models\salesInvoice.cs" />
     <Compile Include="Models\salesInvoiceLine.cs" />
+    <Compile Include="Models\salesQuoteLine.cs" />
+    <Compile Include="Models\salesQuote.cs" />
     <Compile Include="Models\salesOrder.cs" />
     <Compile Include="Models\salesOrderLine.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -513,17 +518,24 @@
     <Content Include="Views\SalesInvoice\_InvoiceShipping.vbhtml" />
     <Content Include="Views\SalesInvoice\_SalesInvoiceDetail.vbhtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\CreateUserProfile.vbhtml" />
     <Content Include="Views\User\Details.vbhtml" />
     <Content Include="Views\User\RequestUserPasswordReset.vbhtml" />
     <Content Include="Views\User\UserPasswordReset.vbhtml" />
-    <Content Include="Views\User\_CreateUserProfileDetails.vbhtml" />
-    <Content Include="Views\User\_CreateUserProfileGeneral.vbhtml" />
     <Content Include="Views\User\_UserProfileDetails.vbhtml" />
     <Content Include="Views\User\_UserProfileGeneral.vbhtml" />
-    <Content Include="Views\User\_UserProfileGrid.vbhtml" />
     <Content Include="Views\User\_UserProfilePassword.vbhtml" />
     <Content Include="Views\User\_UserRoleGrid.vbhtml" />
+    <Content Include="Views\User\_CreateUserDetails.vbhtml" />
+    <Content Include="Views\User\_CreateUserGeneral.vbhtml" />
+    <Content Include="Views\User\CreateUser.vbhtml" />
+    <Content Include="Views\SalesQuote\_QuoteGeneral.vbhtml" />
+    <Content Include="Views\SalesQuote\_QuoteInvoicing.vbhtml" />
+    <Content Include="Views\SalesQuote\_QuoteLines.cshtml" />
+    <Content Include="Views\SalesQuote\_QuoteLinesToolBar.vbhtml" />
+    <Content Include="Views\SalesQuote\_QuoteShipping.vbhtml" />
+    <Content Include="Views\SalesQuote\_SalesQuoteDetail.vbhtml" />
+    <Content Include="Views\SalesQuote\Details.vbhtml" />
+    <Content Include="Views\SalesQuote\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

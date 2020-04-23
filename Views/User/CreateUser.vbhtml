@@ -1,4 +1,4 @@
-﻿@ModelType UserProfileDetailsModel
+﻿@ModelType b2c_ms_graph.UserModel
 
 
 @Code
@@ -12,5 +12,5 @@ End Code
 
 
 <div id="iDetails">
-    @Html.Partial("_CreateUserProfileDetails")
+    @Html.Partial("_CreateUserDetails")
 </div>

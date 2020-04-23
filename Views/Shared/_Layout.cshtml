@@ -42,11 +42,12 @@
                     @if (ClaimsPrincipal.Current.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Customers", "Index", "Customer", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Sales Quotes", "Index", "SalesQuote", new { area = "" }, null)</li>
                         <li>@Html.ActionLink("Sales Orders", "Index", "SalesOrder", new { area = "" }, null)</li>
                         <li>@Html.ActionLink("Sales Invoices", "Index", "SalesInvoice", new { area = "" }, null)</li>
                         if ((gwebRole == "1") || (gwebRole == "2"))
                         {
-                           <li>@Html.ActionLink("Users", "Index", "User", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Users", "Index", "User", new { area = "" }, null)</li>
                         }
                     }
                 </ul>

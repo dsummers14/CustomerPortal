@@ -68,15 +68,31 @@ namespace WebApplication1.Controllers
             return UserTask;
         }
 
-        public async Task<User> PostUser(User user)
+        public async Task<User> PostUser([FromBody] User user)
         {
             User UserTask = null;
-
+          
             try
             {
+
+                var newUser = new User
+                {
+                    AccountEnabled = true,
+                    DisplayName = user.DisplayName,
+                    MailNickname = user.MailNickname,
+                    UserPrincipalName = user.UserPrincipalName,
+                    AdditionalData = user.AdditionalData,
+                    PasswordProfile = new PasswordProfile
+                    {
+                        ForceChangePasswordNextSignIn = true,
+                        Password = user.PasswordProfile.Password
+                    }
+                };
+
+
                 UserTask = await graphClient.Users
                                             .Request()
-                                            .AddAsync(user);
+                                            .AddAsync(newUser);
             }
             catch (Exception ex)
             {
@@ -94,6 +110,7 @@ namespace WebApplication1.Controllers
             {
 
                newUser.AdditionalData = user.AdditionalData;
+                newUser.DisplayName = user.DisplayName;
 
                 UserTask = await graphClient.Users[user.Id]
                                             .Request()
@@ -107,7 +124,7 @@ namespace WebApplication1.Controllers
             return UserTask;
         }
 
-        public async void DeleteUser(string  userId)
+        public async void DeleteUser([FromODataUri] string  userId)
         {
             try
             {
