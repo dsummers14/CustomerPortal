@@ -42,6 +42,7 @@
                     @if (ClaimsPrincipal.Current.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Customers", "Index", "Customer", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Items", "Index", "Item", new { area = "" }, null)</li>
                         <li>@Html.ActionLink("Sales Quotes", "Index", "SalesQuote", new { area = "" }, null)</li>
                         <li>@Html.ActionLink("Sales Orders", "Index", "SalesOrder", new { area = "" }, null)</li>
                         <li>@Html.ActionLink("Sales Invoices", "Index", "SalesInvoice", new { area = "" }, null)</li>

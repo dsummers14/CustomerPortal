@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 
 
-namespace WebApplication1.Controllers
+namespace CustomerPortal.Controllers
 {
     public  class SalesOrdersController : ODataController {
            

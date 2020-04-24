@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.OData.Edm;
 
 
-namespace WebApplication1.Controllers
+namespace CustomerPortal.Controllers
 {
     public  class CustomersController : ODataController {
            

@@ -358,6 +358,8 @@
     </Compile>
     <Compile Include="Connected Services\BC365WebAPI\BC365WebAPIReference.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\SalesQuoteLinesController.cs" />
     <Compile Include="Controllers\SalesQuotesController.cs" />
     <Compile Include="Controllers\SalesQuoteController.cs" />
@@ -396,6 +398,7 @@
     <Compile Include="Models\customer.cs" />
     <Compile Include="Models\salesInvoice.cs" />
     <Compile Include="Models\salesInvoiceLine.cs" />
+    <Compile Include="Models\item.cs" />
     <Compile Include="Models\salesQuoteLine.cs" />
     <Compile Include="Models\salesQuote.cs" />
     <Compile Include="Models\salesOrder.cs" />
@@ -536,6 +539,44 @@
     <Content Include="Views\SalesQuote\_SalesQuoteDetail.vbhtml" />
     <Content Include="Views\SalesQuote\Details.vbhtml" />
     <Content Include="Views\SalesQuote\Index.cshtml" />
+    <Content Include="Views\Item\Details.vbhtml" />
+    <Content Include="Views\Item\_ItemDetail.vbhtml" />
+    <Content Include="Views\Item\_ItemGeneral.vbhtml" />
+    <Content Include="Views\Item\_ItemGrid.vbhtml" />
+    <Content Include="Views\Item\_ItemInvoicing.vbhtml" />
+    <Content Include="Views\Item\_ItemReplenishment.vbhtml" />
+    <Content Include="Views\Item\_ItemTracking.vbhtml" />
+    <Content Include="Views\Item\_ItemWarehouse.vbhtml" />
+    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Checkbox.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CustomerLookup.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\CustomerNameLookup.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\CustomerNoLookup.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DisplayOnly.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\DisplayOnlyDate.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Email.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmployeeNoLookup.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Hidden.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ItemDescriptionLookup.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\ItemNoLookup.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\Month.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SalespersonCodeLookup.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\ShipToCodeLookup.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TermsCodeLookup.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\UserRoleDropdown.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\Year.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\_CustomerAddressLookupGrid.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,7 +8,7 @@ using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Query;
 
 
-namespace WebApplication1.Controllers
+namespace CustomerPortal.Controllers
 {
     [Authorize]
     public class SalesOrderController : Controller

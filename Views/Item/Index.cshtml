@@ -1,0 +1,59 @@
+﻿@using System.Security.Claims
+
+@{
+    ViewBag.Title = "Items";
+
+    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerNumber").Select(s => s.Value).FirstOrDefault();
+    var gwebRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
+    bool filterCustomer = (gwebRole != "1");
+}
+
+
+<h2>Items</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-18 col-md-12">
+            @(Html.Kendo().Grid<Microsoft.NAV.item>
+            ()
+            .Name("grid")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.number).Title("Item No");
+                columns.Bound(p => p.displayName).Title("Description");
+                columns.Bound(p => p.inventory).Title("On Hand").Filterable(false);
+                columns.Bound(p => p.unitPrice).Format("{0:c}").Title("Price");
+                columns.Bound(p => p.baseUnitOfMeasure.displayName).Title("UOM").Filterable(false);
+            })
+            .Pageable()
+            .Sortable()
+            .Scrollable()
+            .Filterable(filterable => filterable
+                .Extra(false)
+                .Operators(operators => operators
+                  .ForString(str => str.Clear()
+                       .IsEqualTo("Is equal to")
+                       .IsNotEqualTo("Is not equal to")
+                       
+            ))
+        )
+            .HtmlAttributes(new { style = "height:550px;" })
+            .DataSource(dataSource => dataSource
+            .Custom()
+            .Sort(s => s.Add("number"))
+                       .Type("odata-v4")
+            .Transport(transport =>
+            {
+                transport.Read(read => read.Url("/oData/Items"));
+
+            })
+            .PageSize(20)
+            .ServerPaging(true)
+            .ServerSorting(true)
+            .ServerFiltering(true)
+            ))
+        </div>
+    </div>
+</div>
+
+@*.ClientTemplate(Html.ActionLink("#=number#", "Details", new { id = "#=id#" }).ToHtmlString()).Title("Item No");*@
