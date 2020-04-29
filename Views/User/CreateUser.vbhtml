@@ -2,15 +2,15 @@
 
 
 @Code
-    ViewData("Title") = "Create User Profile"
+    ViewData("Title") = "Create User"
 End Code
 
-<h2>Create User Profile</h2>
+<h2>Create User</h2>
 
  @Html.ValidationSummary(True)
 
 
 
 <div id="iDetails">
-    @Html.Partial("_CreateUserDetails")
+    @Html.Partial("_CreateUserGeneral")
 </div>

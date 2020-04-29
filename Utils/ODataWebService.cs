@@ -7,9 +7,10 @@ using CustomerPortal;
 
 public static class ODataWebService
 {
-    private static string vCompanyID = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CompanyId").Select(s => s.Value).FirstOrDefault();
+    public static string CompanyId = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CompanyId").Select(s => s.Value).FirstOrDefault();
     private static iCeptsWebServicesEntities dbContext = new iCeptsWebServicesEntities();
-    private static string TenantId = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_TenantId").Select(s => s.Value).FirstOrDefault();
+    public static string TenantId = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_TenantId").Select(s => s.Value).FirstOrDefault();
+    public static string WebRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
     private static BC365Tenant TenantContext = dbContext.BC365Tenant.Where(t => t.TenantId == TenantId).FirstOrDefault();
 
     public static string BuildODataUrl( bool pByCompany = true)
@@ -18,16 +19,16 @@ public static class ODataWebService
 
         if (pByCompany)
         {
-            if (string.IsNullOrEmpty(vCompanyID))
+            if (string.IsNullOrEmpty(CompanyId))
             {
                 company iCompany = null;
                //iCompany = GetEntityCollection<companies>(string.Format("$filter=name eq '{0}'", Settings.Default.CompanyName), false).value.FirstOrDefault();
 
                 if (iCompany != null)
-                    vCompanyID = iCompany.id.ToString();
+                    CompanyId = iCompany.id.ToString();
             }
 
-            iUrl = Settings.Default.Transport + Settings.Default.Host + "/V2.0/" + TenantId + "/" + TenantContext.Environment + "/" + TenantContext.APIVersion + string.Format("/companies({0})/", vCompanyID);
+            iUrl = Settings.Default.Transport + Settings.Default.Host + "/V2.0/" + TenantId + "/" + TenantContext.Environment + "/" + TenantContext.APIVersion + string.Format("/companies({0})/", CompanyId);
         }
         else
             iUrl = Settings.Default.Transport + Settings.Default.Host + "/V2.0/" + TenantId + "/" + TenantContext.Environment+ "/" + TenantContext.APIVersion;

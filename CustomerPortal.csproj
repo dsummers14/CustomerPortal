@@ -521,14 +521,14 @@
     <Content Include="Views\SalesInvoice\_InvoiceShipping.vbhtml" />
     <Content Include="Views\SalesInvoice\_SalesInvoiceDetail.vbhtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\Details.vbhtml" />
     <Content Include="Views\User\RequestUserPasswordReset.vbhtml" />
     <Content Include="Views\User\UserPasswordReset.vbhtml" />
     <Content Include="Views\User\_UserProfileDetails.vbhtml" />
     <Content Include="Views\User\_UserProfileGeneral.vbhtml" />
     <Content Include="Views\User\_UserProfilePassword.vbhtml" />
     <Content Include="Views\User\_UserRoleGrid.vbhtml" />
-    <Content Include="Views\User\_CreateUserDetails.vbhtml" />
+    <Content Include="Views\User\_CreateUserDetails - Copy.vbhtml" />
+    <None Include="Views\User\_CreateUserDetails.cshtml" />
     <Content Include="Views\User\_CreateUserGeneral.vbhtml" />
     <Content Include="Views\User\CreateUser.vbhtml" />
     <Content Include="Views\SalesQuote\_QuoteGeneral.vbhtml" />

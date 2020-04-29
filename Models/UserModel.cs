@@ -24,6 +24,12 @@ namespace b2c_ms_graph
 
         public string confirmPassword { get; set; }
 
+        public bool forcePasswordChange { get; set; }
+
+        public bool DisplayAccountEnabled { get; set; }
+
+        public string DisplayEmailName { get; set; }
+
         public void SetB2CProfile(string TenantName)
         {
             this.PasswordProfile = new PasswordProfile

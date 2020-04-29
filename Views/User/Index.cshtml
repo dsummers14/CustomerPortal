@@ -51,7 +51,6 @@
         {
             transport.Read(read => read.Url("/oData/Users"));
             transport.Update(update => update.Url("/oData/Users/PutUser"));
-            transport.Create(create => create.Url("/oData/Users/PostUser"));
             transport.Destroy(new
             {
                 url = new Kendo.Mvc.ClientHandlerDescriptor
@@ -70,7 +69,11 @@
                 m.Field(f => f.extension_39d2bd21d67b480891ffa985c6eb1398_TenantId).Editable(true);
             })
         )
-        .Events(e => e.Error("error_handler")) 
+        .Events(e =>
+        {
+            e.Error("error_handler");
+            e.RequestEnd("requestend");
+        })
         .PageSize(20)
         .ServerPaging(true)
         .ServerSorting(true)
@@ -82,6 +85,11 @@
 </div>
 
 <script type="text/javascript">
+    function requestend(e) {
+        if (e.type != "read") {
+            this.read();
+        }
+    }
 
     function error_handler(e) {
         if (e.errors) {

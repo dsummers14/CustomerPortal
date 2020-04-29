@@ -10,8 +10,9 @@ using Microsoft.NAV;
 using Microsoft.Graph;
 using b2c_ms_graph;
 using System.Threading.Tasks;
+using CustomerPortal.Properties;
 
-namespace WebApplication1.Controllers
+namespace CustomerPortal.Controllers
 {
     [Authorize]
     public class UserController : Controller
@@ -24,6 +25,10 @@ namespace WebApplication1.Controllers
         public ActionResult CreateUser()
         {
             var newUser = new b2c_ms_graph.UserModel();
+            newUser.extension_39d2bd21d67b480891ffa985c6eb1398_TenantId = ODataWebService.TenantId;
+            newUser.extension_39d2bd21d67b480891ffa985c6eb1398_CompanyId = ODataWebService.CompanyId;
+            newUser.extension_39d2bd21d67b480891ffa985c6eb1398_WebRole = int.Parse(ODataWebService.WebRole) + 1;
+            newUser.DisplayAccountEnabled = true;
             
             return View(newUser);
         }
@@ -31,7 +36,7 @@ namespace WebApplication1.Controllers
         [HttpPost()]
         public async  Task<ActionResult> CreateUser(b2c_ms_graph.UserModel userModel, FormCollection formCollection)
         {
-            var iModel = userModel;
+            User newUser = new User();
 
             if (ModelState.IsValid)
             {
@@ -41,11 +46,31 @@ namespace WebApplication1.Controllers
                     {
                         try
                         {
+                            IDictionary<string, object> extensionInstance = new Dictionary<string, object>();
+                            extensionInstance.Add(B2cCustomAttributeHelper.GetCompleteAttributeName("WebRole"), userModel.extension_39d2bd21d67b480891ffa985c6eb1398_WebRole);
+                            extensionInstance.Add(B2cCustomAttributeHelper.GetCompleteAttributeName("TenantId"), ODataWebService.TenantId);
+                            extensionInstance.Add(B2cCustomAttributeHelper.GetCompleteAttributeName("CompanyId"), userModel.extension_39d2bd21d67b480891ffa985c6eb1398_CompanyId);
+                            extensionInstance.Add(B2cCustomAttributeHelper.GetCompleteAttributeName("CustomerNumber"),  userModel.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber);
+                            newUser.AdditionalData = extensionInstance;
+
+                            newUser.DisplayName = userModel.DisplayName;
+                            newUser.AccountEnabled = userModel.DisplayAccountEnabled;
+                            newUser.PasswordProfile = new PasswordProfile { Password = userModel.newPassword,
+                                                                           ForceChangePasswordNextSignIn = userModel.forcePasswordChange};
+                            newUser.PasswordPolicies = "DisablePasswordExpiration";
+                            newUser.Identities = new List<ObjectIdentity> {
+                                new ObjectIdentity
+                                {
+                                    SignInType = "emailAddress",
+                                    Issuer = "ICPCustomerPortal1.onmicrosoft.com",
+                                    IssuerAssignedId = userModel.DisplayEmailName
+                                }};
+                       
                             GraphServiceClient graphClient = GraphClient.CreateGraphClient();
                              
                             await graphClient.Users
                                .Request()
-                               .AddAsync(iModel);
+                               .AddAsync(newUser);
                         }
                         catch
                         {
@@ -67,7 +92,7 @@ namespace WebApplication1.Controllers
             
             
             //if there was an error
-            return View(iModel);
+            return View(userModel);
         }
 
         public async Task<ActionResult> DeleteUser(DataSourceRequest request, string Id)

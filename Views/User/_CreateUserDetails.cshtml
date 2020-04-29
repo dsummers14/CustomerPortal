@@ -1,0 +1,41 @@
+﻿@using System.Security.Claims
+
+@{
+
+    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerNumber").Select(s => s.Value).FirstOrDefault();
+    var gwebRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
+    bool filterCustomer = (gwebRole != "1");
+}
+    <form>
+        <fieldset>
+            @{Html.Kendo().PanelBar()
+                .Name("UserProfilePanelBar")
+                .ExpandMode(PanelBarExpandMode.Multiple)
+                .Items(t =>
+                t.Add()
+                .Text("General")
+                .Expanded(true)
+                .Content(c =>
+                            @<div>
+                                  Html.Partial("_CreateUserGeneral", Model)
+                            </div>
+                        )
+                ).Render();
+            }
+            <p>
+                @Html.Kendo().Button().Content("Update").Name("General")
+                @Html.Kendo().Button().Content("Exit").Name("Cancel").HtmlAttributes(new { onClick = "backtoIndex();return false;" })
+            </p>
+        </fieldset>
+    </form>
+
+
+
+    <script type="text/javascript">
+
+    function backtoIndex() {
+        window.location.href = '@Url.Action("Index", "User")';
+        }
+
+
+    </script>
