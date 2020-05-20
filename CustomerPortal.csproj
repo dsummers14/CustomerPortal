@@ -358,6 +358,7 @@
     </Compile>
     <Compile Include="Connected Services\BC365WebAPI\BC365WebAPIReference.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\SalesQuoteLinesController.cs" />

@@ -8,7 +8,7 @@ using Microsoft.NAV;
 namespace WebApplication1.Controllers
 {
     [Authorize]
-    public class CustomerController : Controller
+    public class CompanyController : Controller
     {
       
         public ActionResult Index()
@@ -18,14 +18,14 @@ namespace WebApplication1.Controllers
 
 
         [AllowAnonymous]
-        public JsonResult GetCustomers(string CompanyId = "")
+        public JsonResult GetCompanies()
         {
-            Uri iUri = string.IsNullOrEmpty(CompanyId) ? new Uri(ODataWebService.BuildODataUrl()) : new Uri(ODataWebService.BuildODataUrl(CompanyId));
+            Uri iUri = new Uri(ODataWebService.BuildODataUrl(false));
             NAV iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
             
-            var iResults = (from Customer in iWebService.customers
-                            orderby Customer.displayName
-                            select new { Customer.number, Customer.displayName}).ToList().Distinct();
+            var iResults = (from Company in iWebService.companies
+                            orderby Company.displayName
+                            select new {Company.displayName, Company.id }).ToList().Distinct();
 
             return Json(iResults, JsonRequestBehavior.AllowGet);
         }

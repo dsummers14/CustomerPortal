@@ -71,6 +71,8 @@ namespace CustomerPortal.Controllers
                             await graphClient.Users
                                .Request()
                                .AddAsync(newUser);
+
+                            RedirectToAction("Index", "User");                        
                         }
                         catch
                         {
