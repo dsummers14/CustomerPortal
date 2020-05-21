@@ -25,9 +25,9 @@ namespace CustomerPortal.Controllers
         public ActionResult CreateUser()
         {
             var newUser = new b2c_ms_graph.UserModel();
-            newUser.extension_39d2bd21d67b480891ffa985c6eb1398_TenantId = ODataWebService.TenantId;
-            newUser.extension_39d2bd21d67b480891ffa985c6eb1398_CompanyId = ODataWebService.CompanyId;
-            newUser.extension_39d2bd21d67b480891ffa985c6eb1398_WebRole = int.Parse(ODataWebService.WebRole) + 1;
+            newUser.extension_39d2bd21d67b480891ffa985c6eb1398_TenantId = ODataWebService.TenantId();
+            newUser.extension_39d2bd21d67b480891ffa985c6eb1398_CompanyId = ODataWebService.CompanyId();
+            newUser.extension_39d2bd21d67b480891ffa985c6eb1398_WebRole = int.Parse(ODataWebService.WebRole()) + 1;
             newUser.DisplayAccountEnabled = true;
             
             return View(newUser);
@@ -48,7 +48,7 @@ namespace CustomerPortal.Controllers
                         {
                             IDictionary<string, object> extensionInstance = new Dictionary<string, object>();
                             extensionInstance.Add(B2cCustomAttributeHelper.GetCompleteAttributeName("WebRole"), userModel.extension_39d2bd21d67b480891ffa985c6eb1398_WebRole);
-                            extensionInstance.Add(B2cCustomAttributeHelper.GetCompleteAttributeName("TenantId"), ODataWebService.TenantId);
+                            extensionInstance.Add(B2cCustomAttributeHelper.GetCompleteAttributeName("TenantId"), ODataWebService.TenantId());
                             extensionInstance.Add(B2cCustomAttributeHelper.GetCompleteAttributeName("CompanyId"), userModel.extension_39d2bd21d67b480891ffa985c6eb1398_CompanyId);
                             extensionInstance.Add(B2cCustomAttributeHelper.GetCompleteAttributeName("CustomerNumber"),  userModel.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber);
                             newUser.AdditionalData = extensionInstance;

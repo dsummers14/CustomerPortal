@@ -13,10 +13,10 @@ namespace CustomerPortal
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class iCeptsWebServicesEntities : DbContext
+    public partial class CutomerPortalEntities : DbContext
     {
-        public iCeptsWebServicesEntities()
-            : base("name=iCeptsWebServicesEntities")
+        public CutomerPortalEntities()
+            : base("name=CutomerPortalEntities")
         {
         }
     
@@ -25,8 +25,6 @@ namespace CustomerPortal
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AccountInfo> AccountInfoes { get; set; }
         public virtual DbSet<BC365Tenant> BC365Tenant { get; set; }
-        public virtual DbSet<NavAPI> NavAPIs { get; set; }
     }
 }

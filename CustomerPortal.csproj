@@ -317,9 +317,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountInfo.cs">
-      <DependentUpon>iCeptsWebService.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -354,7 +351,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="BC365Tenant.cs">
-      <DependentUpon>iCeptsWebService.tt</DependentUpon>
+      <DependentUpon>CustomerPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Connected Services\BC365WebAPI\BC365WebAPIReference.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -377,23 +374,23 @@
     <Compile Include="Controllers\SalesOrderLinesController.cs" />
     <Compile Include="Controllers\SalesOrdersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="CustomerPortal.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomerPortal.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerPortal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomerPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerPortal.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomerPortal.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="iCeptsWebService.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>iCeptsWebService.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="iCeptsWebService.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>iCeptsWebService.tt</DependentUpon>
-    </Compile>
-    <Compile Include="iCeptsWebService.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>iCeptsWebService.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\customer.cs" />
@@ -406,9 +403,6 @@
     <Compile Include="Models\salesOrderLine.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UsersModel.cs" />
-    <Compile Include="NavAPI.cs">
-      <DependentUpon>iCeptsWebService.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -433,6 +427,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="CustomerPortal.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CustomerPortal.edmx</DependentUpon>
+      <LastGenOutput>CustomerPortal.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="CustomerPortal.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CustomerPortal.edmx</DependentUpon>
+      <LastGenOutput>CustomerPortal.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -460,27 +464,17 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="appsettings.json" />
-    <EntityDeploy Include="iCeptsWebService.edmx">
+    <EntityDeploy Include="CustomerPortal.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>iCeptsWebService.Designer.cs</LastGenOutput>
+      <LastGenOutput>CustomerPortal.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="iCeptsWebService.edmx.diagram">
-      <DependentUpon>iCeptsWebService.edmx</DependentUpon>
+    <Content Include="CustomerPortal.edmx.diagram">
+      <DependentUpon>CustomerPortal.edmx</DependentUpon>
     </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="iCeptsWebService.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>iCeptsWebService.edmx</DependentUpon>
-      <LastGenOutput>iCeptsWebService.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="iCeptsWebService.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>iCeptsWebService.edmx</DependentUpon>
-      <LastGenOutput>iCeptsWebService.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.css" />
