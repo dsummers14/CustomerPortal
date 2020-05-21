@@ -529,6 +529,7 @@
     <Content Include="Views\User\_UserProfilePassword.vbhtml" />
     <Content Include="Views\User\_UserRoleGrid.vbhtml" />
     <Content Include="Views\User\_CreateUserDetails - Copy.vbhtml" />
+    <Content Include="Views\Shared\EditorTemplates\CompanyLookup.vbhtml" />
     <None Include="Views\User\_CreateUserDetails.cshtml" />
     <Content Include="Views\User\_CreateUserGeneral.vbhtml" />
     <Content Include="Views\User\CreateUser.vbhtml" />

@@ -25,7 +25,7 @@ namespace WebApplication1.Controllers
             
             var iResults = (from Customer in iWebService.customers
                             orderby Customer.displayName
-                            select new { Customer.number, Customer.displayName}).ToList().Distinct();
+                            select new { Customer.number, Customer.displayName, Customer.id}).ToList().Distinct();
 
             return Json(iResults, JsonRequestBehavior.AllowGet);
         }

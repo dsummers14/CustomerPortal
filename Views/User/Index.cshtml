@@ -105,12 +105,25 @@
         }
     }
 
-
     function onDetailsClick(e) {
         e.preventDefault();
         var UserProfile = this.dataItem($(e.currentTarget).closest("tr"));
 
         window.location.href = '@Url.Action("Details","UserProfile")' + "?UserID=" + UserProfile.UserID;
     }
+  
+     function backtoIndex() {
+        window.location.href = '@Url.Action("Index", "User")';
+        }
+
+        function getCompanyId() {
+
+            return { CompanyId: $('#extension_39d2bd21d67b480891ffa985c6eb1398_CompanyId').val() };
+        }
+
+        function changeCompany(e) {
+
+            $('#extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber').data('kendoDropDownList').dataSource.read();
+        }
 
 </script>

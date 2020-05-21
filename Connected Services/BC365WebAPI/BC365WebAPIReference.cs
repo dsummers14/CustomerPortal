@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 04/02/2020 3:05:46 PM
+// Generation date: 05/20/2020 3:50:07 PM
 namespace Microsoft.NAV
 {
     /// <summary>
