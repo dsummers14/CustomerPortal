@@ -54,8 +54,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Kendo.Mvc">
-      <HintPath>lib\KENDOUIMVC\2020.1.219.545.Trial\Kendo.Mvc.dll</HintPath>
+    <Reference Include="Kendo.Mvc, Version=2020.2.513.545, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\KENDOUIMVC\2020.2.513.545.Trial\Kendo.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.OData, Version=7.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.AspNet.OData.7.3.0\lib\net45\Microsoft.AspNet.OData.dll</HintPath>
@@ -471,6 +473,7 @@
     <Content Include="CustomerPortal.edmx.diagram">
       <DependentUpon>CustomerPortal.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -516,17 +519,9 @@
     <Content Include="Views\SalesInvoice\_InvoiceShipping.vbhtml" />
     <Content Include="Views\SalesInvoice\_SalesInvoiceDetail.vbhtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\RequestUserPasswordReset.vbhtml" />
-    <Content Include="Views\User\UserPasswordReset.vbhtml" />
-    <Content Include="Views\User\_UserProfileDetails.vbhtml" />
-    <Content Include="Views\User\_UserProfileGeneral.vbhtml" />
-    <Content Include="Views\User\_UserProfilePassword.vbhtml" />
-    <Content Include="Views\User\_UserRoleGrid.vbhtml" />
-    <Content Include="Views\User\_CreateUserDetails - Copy.vbhtml" />
     <Content Include="Views\Shared\EditorTemplates\CompanyLookup.vbhtml" />
-    <None Include="Views\User\_CreateUserDetails.cshtml" />
     <Content Include="Views\User\_CreateUserGeneral.vbhtml" />
-    <Content Include="Views\User\CreateUser.vbhtml" />
+    <Content Include="Views\User\CreateUserold.vbhtml" />
     <Content Include="Views\SalesQuote\_QuoteGeneral.vbhtml" />
     <Content Include="Views\SalesQuote\_QuoteInvoicing.vbhtml" />
     <Content Include="Views\SalesQuote\_QuoteLines.cshtml" />
@@ -573,6 +568,8 @@
     <Content Include="Views\Shared\EditorTemplates\UserRoleDropdown.vbhtml" />
     <Content Include="Views\Shared\EditorTemplates\Year.vbhtml" />
     <Content Include="Views\Shared\EditorTemplates\_CustomerAddressLookupGrid.vbhtml" />
+    <Content Include="Views\User\UpdateUser.cshtml" />
+    <Content Include="Views\User\CreateUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
