@@ -15,7 +15,6 @@
             @(Html.Kendo().Grid<UserModel>
         ()
         .Name("grid")
-        .Editable(e => e.Mode(GridEditMode.InLine))
          .ToolBar(t => t.Custom().Text("Add User").Action("CreateUser", "User"))
         .Columns(columns =>
         {
@@ -27,7 +26,7 @@
             columns.Bound(p => p.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber).Title("Customer Number");
             columns.Command(c =>
             {
-                c.Edit();
+                c.Custom("Update").Click("onUpdateClick");
                 c.Destroy();
             });
         })
@@ -50,12 +49,18 @@
         .Transport(transport =>
         {
             transport.Read(read => read.Url("/oData/Users"));
-            transport.Update(update => update.Url("/oData/Users/PutUser"));
             transport.Destroy(new
             {
                 url = new Kendo.Mvc.ClientHandlerDescriptor
                 {
                     HandlerName = @"function(data) {return '/User/DeleteUser/' + data.Id ;}"
+                }
+            });
+            transport.Update(new
+            {
+                url = new Kendo.Mvc.ClientHandlerDescriptor
+                {
+                    HandlerName = @"function(data) {return '/User/UpdateUser/' + data.Id ;}"
                 }
             });
 
@@ -105,11 +110,11 @@
         }
     }
 
-    function onDetailsClick(e) {
+    function onUpdateClick(e) {
         e.preventDefault();
-        var UserProfile = this.dataItem($(e.currentTarget).closest("tr"));
+        var User = this.dataItem($(e.currentTarget).closest("tr"));
 
-        window.location.href = '@Url.Action("Details","UserProfile")' + "?UserID=" + UserProfile.UserID;
+        window.location.href = '@Url.Action("UpdateUser","User")' + "?Id=" + User.id;
     }
   
      function backtoIndex() {

@@ -58,6 +58,7 @@ namespace WebApplication1.Controllers
             {
                UserTask = await graphClient.Users[userId]
                                            .Request()
+                                           .Select($"id,displayName,identities,{customerNumberAttributeName},{webRoleAttributeName},{ TenantIdAttributeName},{ CompanyIdAttributeName}")
                                            .GetAsync();
             }
             catch (Exception ex)

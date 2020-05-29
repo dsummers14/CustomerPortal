@@ -520,8 +520,6 @@
     <Content Include="Views\SalesInvoice\_SalesInvoiceDetail.vbhtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CompanyLookup.vbhtml" />
-    <Content Include="Views\User\_CreateUserGeneral.vbhtml" />
-    <Content Include="Views\User\CreateUserold.vbhtml" />
     <Content Include="Views\SalesQuote\_QuoteGeneral.vbhtml" />
     <Content Include="Views\SalesQuote\_QuoteInvoicing.vbhtml" />
     <Content Include="Views\SalesQuote\_QuoteLines.cshtml" />
@@ -568,8 +566,9 @@
     <Content Include="Views\Shared\EditorTemplates\UserRoleDropdown.vbhtml" />
     <Content Include="Views\Shared\EditorTemplates\Year.vbhtml" />
     <Content Include="Views\Shared\EditorTemplates\_CustomerAddressLookupGrid.vbhtml" />
-    <Content Include="Views\User\UpdateUser.cshtml" />
+    <Content Include="Views\User\UpdateUserOrig.cshtml" />
     <Content Include="Views\User\CreateUser.cshtml" />
+    <Content Include="Views\User\UpdateUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
