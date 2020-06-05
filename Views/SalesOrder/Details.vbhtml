@@ -9,11 +9,6 @@ End Code
 
  @Html.ValidationSummary(True)
 
-
-@*<div id="Nav">
-    @Html.Partial("_CustomerNav", Model.CustomerNav)
-</div>*@
-
 <div id="iGrid">
     @Html.Partial("_SalesOrderDetail")
 </div>

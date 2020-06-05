@@ -1,44 +1,81 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿
+html {
+    position: relative;
+    min-height: 100%;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+body {
+    margin-bottom: 80px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+/* #region Navbar styles */
+.navbar-header {
+    border-bottom: 1px solid rgba(255,255,255, 0.1);
 }
+/* #endregion */
 
-#profile-options {
-    display: none;
-    z-index: 100;
-    background-color: rgb(238, 238, 238);
+
+/* #region Footer styles */
+.footer {
     position: absolute;
-    border: solid;
-    border-color: rgb(128, 128, 128);
-    border-width: thin;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.85em;
+}
+/* #endregion */
+
+/* #region custom Kendo UI styles */
+#configure {
+    display: none;
 }
 
-.profile-link {
-    /*display:table-cell;*/
-    white-space: nowrap;
+.k-panelbar .k-content {
+    padding: 20px;
 }
 
-.profile-links {
-    list-style-type: none;
-    padding-left: 10px;
-    padding-right: 10px;
-    /*display:table-row;*/
+p .k-button {
+    margin: 0 15px 0 0;
 }
 
-#profile-link {
-    cursor: pointer;
+.k-state-active .label {
+    font-size: 1em;
+}
+
+/* #endregion */
+
+@media (max-width: 767px) {
+    #responsive-panel {
+        transition: all linear .2s;
+    }
+
+    #configure {
+        display: block;
+        float: right;
+    }
+
+    .k-rpanel {
+        width: 100%;
+    }
+
+    .k-rpanel-expanded {
+        margin-top: 1rem;
+    }
+
+    .navbar-header {
+        width: 100%;
+    }
+
+    .footer {
+        height: 60px;
+    }
+
+    .k-menu .k-item,
+    .k-menu .k-link {
+        width: 100%;
+    }
+
+    .k-menu .k-link {
+        box-sizing: border-box;
+    }
 }
 

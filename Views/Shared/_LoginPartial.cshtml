@@ -1,10 +1,10 @@
 ﻿@if (Request.IsAuthenticated)
 {
-    <text>
+   
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <a id="profile-link">@User.Identity.Name</a>
-                <div id="profile-options" class="nav navbar-nav navbar-right">
+                <div id="profile-options"> 
                     @*<ul class="profile-links">
                         <li class="profile-link">
                             @Html.ActionLink("Edit Profile", "EditProfile", "Account")
@@ -19,7 +19,7 @@
                 @Html.ActionLink("Sign out", "SignOut", "Account")
             </li>
         </ul>
-    </text>
+   
 }
 else
 {

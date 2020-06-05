@@ -1,0 +1,72 @@
+﻿@using System.Security.Claims
+@{
+
+    var gwebRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+
+    <link href="@Url.Content("~/Content/kendo/2020.2.513/kendo.bootstrap-v4.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/kendo/2020.2.513/jquery.min.js")"></script>
+
+    <script src="@Url.Content("~/Scripts/kendo/2020.2.513/jszip.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2020.2.513/kendo.all.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2020.2.513/kendo.aspnetmvc.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+
+
+
+   
+</head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Customer Portal", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                        @if (ClaimsPrincipal.Current.Identity.IsAuthenticated)
+                        {
+                            <li>@Html.ActionLink("Customers", "Index", "Customer", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Items", "Index", "Item", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sales Quotes", "Index", "SalesQuote", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sales Orders", "Index", "SalesOrder", new { area = "" }, null)</li>
+                            <li>@Html.ActionLink("Sales Invoices", "Index", "SalesInvoice", new { area = "" }, null)</li>
+                            if ((gwebRole == "1") || (gwebRole == "2"))
+                            {
+                                <li>@Html.ActionLink("Users", "Index", "User", new { area = "" }, null)</li>
+                            }
+                        }
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - iCepts Technology Group, Inc.</p>
+            </footer>
+        </div>
+
+
+        @*@Scripts.Render("~/bundles/bootstrap")*@
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

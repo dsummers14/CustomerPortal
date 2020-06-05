@@ -1,0 +1,20 @@
+﻿@model CustomerPortal.UserViewModel
+
+@(Html.Kendo().Form<CustomerPortal.UserViewModel>()
+    .Name("formExample")
+    .HtmlAttributes(new { action = "", method = "POST" })        
+    .Items(items =>
+    {
+        items.AddGroup()
+            .Label("Registration Form")
+            .Items(i =>
+            {
+                i.Add()
+                    .Field(f => f.FirstName)
+                    .Label(l => l.Text("First Name:"));
+                i.Add()
+                    .Field(f => f.LastName)
+                    .Label(l => l.Text("Last Name:"));               
+            });
+    })
+)

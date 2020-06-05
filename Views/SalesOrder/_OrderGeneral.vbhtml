@@ -1,8 +1,8 @@
 ﻿@ModelType Microsoft.NAV.salesOrder
 
       <div class="k-content">
-          @Html.HiddenFor(Function(m) m.id)
-          @Html.HiddenFor(Function(m) m.number)
+          @*@Html.HiddenFor(Function(m) m.id)
+          @Html.HiddenFor(Function(m) m.number)*@
           <table>
               <tr>
                   <td>No:</td>
