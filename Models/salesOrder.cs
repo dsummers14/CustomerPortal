@@ -1,33 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace Microsoft.NAV
 {
+    [MetadataType(typeof(salesOrder.salesOrderMetadata))]
     public partial class salesOrder : global::Microsoft.OData.Client.BaseEntityType
     {
-        public string orderDateString
+        public DateTime orderDateTime { get; set; }    
+        public DateTime requestedDeliveryDateTime { get; set; }
+        public DateTime postingDateTime { get; set; }
+        
+        public class salesOrderMetadata
         {
-        get
-            {
-              return ODataWebService.EdmDateToDateTime(orderDate).ToShortDateString();
-            }
-        }
-        public string requestedDeliveryDateString
-        {
-            get
-            {
-                return ODataWebService.EdmDateToDateTime(requestedDeliveryDate).ToShortDateString();
-            }
-        }
-        public string postingDateString
-        {
-            get
-            {
-                return ODataWebService.EdmDateToDateTime(postingDate).ToShortDateString();
-            }
-        }
+            [UIHint("CustomerLookup")]
+            public string customerNumber { get; set; }
 
-    }
+        }
+    } 
 }
+ 

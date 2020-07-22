@@ -17,7 +17,6 @@
             @(Html.Kendo().Grid<Microsoft.NAV.salesOrder>
             ()
             .Name("grid")
-             .ToolBar(t => t.Custom().Text("Add Order").Action("CreateOrder", "SalesOrder"))
             .Columns(columns =>
             {
                 columns.Bound(p => p.number).ClientTemplate(Html.ActionLink("#=number#", "Details", new { id = "#=id#" }).ToHtmlString()).Title("Order No");

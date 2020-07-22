@@ -1,0 +1,71 @@
+﻿@model Microsoft.NAV.salesOrder
+
+@using System.Security.Claims;
+
+@{
+    ViewBag.Title = "Create Order";
+
+    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerNumber").Select(s => s.Value).FirstOrDefault();
+    var gwebRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
+    Boolean filterCustomer = (gwebRole != "1");
+
+}
+
+
+    <div class="demo-section k-content">
+        <div id="validation-success"></div>
+
+        @(Html.Kendo().Form<Microsoft.NAV.salesOrder>()
+        .Name("SalesOrder")
+        .HtmlAttributes(new { action = "", method = "POST" })
+        .Orientation("vertical")
+        .Items(items =>
+        {
+            items.AddGroup()
+                 .Label("Sales Order")
+                 .Items(i =>
+                 {
+                     i.Add()
+                      .Field(f => f.customerNumber)
+                      .Label(l => l.Text("Customer:"))
+                      .Editor(e =>
+                      {e.ComboBox()
+                        .Name("customerNumber")
+                        .DataTextField("displayName")
+                        .DataValueField("number")
+                        .HtmlAttributes(new { style = "width:100%" })
+                        .AutoBind(true)
+                        .DataSource(s => s.Read(r => r.Action("GetCustomers", "Customer")).ServerFiltering(true));
+                      });
+
+                     i.Add()
+                       .Field(f => f.externalDocumentNumber)
+                      .Label(l => l.Text("External Order Number:"));
+
+                     i.Add()
+                      .Field(f => f.orderDateTime)
+                      .Label(l => l.Text("Order Date:"))
+                      .Editor(e =>
+                      {
+                          e.DatePicker()
+                           .Name("orderDateTime");
+                      });
+
+                     i.Add()
+                      .Field(f => f.requestedDeliveryDateTime)
+                      .Label(l => l.Text("Requested Delivery Date:"))
+                      .Editor(e =>
+                      {
+                          e.DatePicker();
+                      });
+                 });
+
+        })
+
+    )
+
+    </div>
+
+<script>
+  
+</script>

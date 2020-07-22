@@ -4,6 +4,10 @@ using Microsoft.AspNet.OData.Query;
 using Microsoft.NAV;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web.Http;
+
+
 
 
 
@@ -36,5 +40,7 @@ namespace CustomerPortal.Controllers
       
             return iQuery;
         }
+
+     
     }
 }

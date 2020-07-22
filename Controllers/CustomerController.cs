@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.NAV;
+using System.Security.Claims;
 
 namespace WebApplication1.Controllers
 {
@@ -20,6 +21,9 @@ namespace WebApplication1.Controllers
         [AllowAnonymous]
         public JsonResult GetCustomers(string CompanyId = "")
         {
+            if (CompanyId == "") 
+                CompanyId = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CompanyId").Select(s => s.Value).FirstOrDefault();
+
             Uri iUri = string.IsNullOrEmpty(CompanyId) ? new Uri(ODataWebService.BuildODataUrl()) : new Uri(ODataWebService.BuildODataUrl(CompanyId));
             NAV iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
             

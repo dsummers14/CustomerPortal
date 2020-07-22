@@ -8,8 +8,7 @@ namespace CustomerPortal
 {
     public class UserViewModel
     {
-        public int UserID { get; set; }
-
+     
         [Required]
         public string FirstName { get; set; }
 
