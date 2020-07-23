@@ -3,7 +3,7 @@
 @using System.Security.Claims;
 
 @{
-    ViewBag.Title = "Create Order";
+    ViewBag.Title = "Update Order";
 
     var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerNumber").Select(s => s.Value).FirstOrDefault();
     var gwebRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
@@ -13,7 +13,7 @@
 
 
     <div class="demo-section k-content">
-        <h2>Create Sales Order</h2>
+        <h2>Update Sales Order</h2>
         <div id="validation-success"></div>
 
         @(Html.Kendo().Form<CustomerPortal.salesOrderModel>()
@@ -28,6 +28,9 @@
                  .Label("General")
                  .Items(i =>
                  {
+                     i.Add()
+                      .Field(f => f.id)
+                     .Label(l => l.Text("id:"));
                      i.Add()
                       .Field(f => f.customerNumber)
                       .Label(l => l.Text("Sell-to Customer:"))

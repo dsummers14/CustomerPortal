@@ -406,7 +406,7 @@
     <Compile Include="Models\item.cs" />
     <Compile Include="Models\salesQuoteLine.cs" />
     <Compile Include="Models\salesQuote.cs" />
-    <Compile Include="Models\salesOrder.cs" />
+    <Compile Include="Models\salesOrderModel.cs" />
     <Compile Include="Models\salesOrderLine.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UsersModel.cs" />
@@ -843,6 +843,7 @@
     <Content Include="Views\SalesOrderVB\_OrderGeneralNew.cshtml" />
     <Content Include="Views\SalesOrder\Index.cshtml" />
     <Content Include="Views\SalesOrder\CreateOrder.cshtml" />
+    <Content Include="Views\SalesOrder\UpdateOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

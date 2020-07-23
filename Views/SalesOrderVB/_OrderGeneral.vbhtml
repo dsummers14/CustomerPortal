@@ -8,7 +8,7 @@
                   <td>No:</td>
                   <td>@Html.EditorFor(Function(m) m.number)</td>
                   <td>Order Date:</td>
-                  <td>@Html.EditorFor(Function(m) m.orderDateString)</td>
+                  <td>@Html.EditorFor(Function(m) m.orderDate)</td>
               </tr>
                <tr>
                   <td>Sell-to Customer No:</td>

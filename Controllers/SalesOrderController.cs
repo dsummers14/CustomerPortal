@@ -29,19 +29,18 @@ namespace CustomerPortal.Controllers
             return View(newOrder());
         }
 
-        public salesOrder newOrder()
+        public salesOrderModel newOrder()
         {
             var customerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerNumber").Select(s => s.Value).FirstOrDefault();
             var webRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
             bool filterCustomer = (webRole != "1");
 
-            var newOrder = new salesOrder();
+            var newOrder = new salesOrderModel();
 
             newOrder.orderDateTime = DateTime.Now;
-            newOrder.postingDateTime = DateTime.Now;
             newOrder.requestedDeliveryDateTime = DateTime.Now;
-          
-           if (filterCustomer) 
+
+            if (filterCustomer) 
                 newOrder.customerNumber = customerNumber;
                     
 
@@ -49,35 +48,110 @@ namespace CustomerPortal.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateOrder(salesOrder order)
+        public ActionResult CreateOrder(salesOrderModel order)
         {
             if (!ModelState.IsValid)
             {
-               var updatedOrder = new salesOrder();
+             
             }
 
+            try
+            {
+                Uri iUri = new Uri(ODataWebService.BuildODataUrl());
+                NAV iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
+                var newOrder = new salesOrder();
 
+                newOrder.customerNumber = order.customerNumber;
+                newOrder.externalDocumentNumber = order.externalDocumentNumber;
+                newOrder.orderDate = order.orderDateTime;
+                newOrder.requestedDeliveryDate = order.requestedDeliveryDateTime;
+                newOrder.currencyCode = "USD";
+                newOrder.shipToContact = order.shipToContact;
+                newOrder.shipToName = order.shipToName;
+                newOrder.shippingPostalAddress = order.shippingPostalAddress;
+
+
+                iWebService.AddTosalesOrders(newOrder);
+                iWebService.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return Redirect("Index") ;
         }
 
-        public ActionResult Details(Guid id)
+        [HttpGet]
+        public ActionResult UpdateOrder(Guid id)
         {
-            salesOrder iSalesOrder = null;
+            salesOrderModel salesOrderModel = new salesOrderModel();
             Uri iUri = new Uri(ODataWebService.BuildODataUrl());
-            NAV iWebService = new NAV(iUri) {Credentials = ODataWebService.CreateCredentials(iUri.ToString())};
+            NAV iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
 
             try
             {
-                iSalesOrder = (from salesOrder in iWebService.salesOrders where salesOrder.id == id select salesOrder).FirstOrDefault();
+                var salesOrder = (from lsalesOrder in iWebService.salesOrders where lsalesOrder.id == id select lsalesOrder).FirstOrDefault();
+
+                salesOrderModel.id = salesOrder.id;
+                salesOrderModel.customerNumber = salesOrder.customerNumber;
+                salesOrderModel.externalDocumentNumber = salesOrder.externalDocumentNumber;
+                salesOrderModel.orderDateTime = ODataWebService.EdmDateToDateTime(salesOrder.orderDate);
+                salesOrderModel.requestedDeliveryDateTime = ODataWebService.EdmDateToDateTime(salesOrder.requestedDeliveryDate);
+                salesOrderModel.currencyCode = "USD";
+                salesOrderModel.shipToContact = salesOrder.shipToContact;
+                salesOrderModel.shipToName = salesOrder.shipToName;
+                salesOrderModel.shippingPostalAddress = salesOrder.shippingPostalAddress;
+
             }
             catch (Exception ex)
             {
                 // return ex;
             }
-            return View(iSalesOrder);
+            return View(salesOrderModel);
         }
 
+        [HttpPost]
+        public ActionResult UpdateOrder(salesOrderModel salesOrderModel)
+        {
+            if (!ModelState.IsValid)
+            {
+
+            }
+
+            try
+            {
+                Uri iUri = new Uri(ODataWebService.BuildODataUrl());
+                NAV iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
+                var iSalesOrder = (from lsalesOrder in iWebService.salesOrders where lsalesOrder.id == salesOrderModel.id select lsalesOrder).FirstOrDefault();
+                salesOrder salesOrder = new salesOrder();
+
+                
+                
+                if (iSalesOrder != null)
+                {
+                    iSalesOrder.billingPostalAddress = null;
+                    iSalesOrder.externalDocumentNumber = salesOrderModel.externalDocumentNumber;
+                    iSalesOrder.orderDate = salesOrderModel.orderDateTime;
+                    iSalesOrder.requestedDeliveryDate = salesOrderModel.requestedDeliveryDateTime;
+                    iSalesOrder.currencyCode = "USD";
+                    iSalesOrder.shipToContact = salesOrderModel.shipToContact;
+                    iSalesOrder.shipToName = salesOrderModel.shipToName;
+                    iSalesOrder.shippingPostalAddress = salesOrderModel.shippingPostalAddress;
+
+                    iWebService.UpdateObject(iSalesOrder);
+                    iWebService.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return Redirect("Index");
+        }
+
+       
 
     }
 }

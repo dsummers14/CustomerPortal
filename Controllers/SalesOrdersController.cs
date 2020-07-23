@@ -30,7 +30,6 @@ namespace CustomerPortal.Controllers
                //                                 select salesOrder;
                
                 iQuery = (IQueryable<salesOrder>)queryOptions.ApplyTo(iWebService.salesOrders);
-              
             }
 
             catch (Exception ex)
