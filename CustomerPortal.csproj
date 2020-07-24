@@ -400,6 +400,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AppSettings.cs" />
+    <Compile Include="Models\BCEntities.cs" />
     <Compile Include="Models\customer.cs" />
     <Compile Include="Models\salesInvoice.cs" />
     <Compile Include="Models\salesInvoiceLine.cs" />
@@ -419,6 +420,7 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\B2cCustomAttributeHelper.cs" />
+    <Compile Include="Utils\BCAPIServices.cs" />
     <Compile Include="Utils\ClaimsPrincipalExtension.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\Globals.cs" />
