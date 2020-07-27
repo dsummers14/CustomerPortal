@@ -80,7 +80,7 @@ namespace CustomerPortal.Controllers
 
             }
 
-            return Redirect("Index") ;
+            return View("Index");
         }
 
         [HttpGet]
@@ -123,14 +123,24 @@ namespace CustomerPortal.Controllers
             try
             {
                 var salesOrder = BCAPIServices.GetEntityById<BCEntities.salesOrder>(salesOrderModel.id.ToString());
-                
+
+                Dictionary<string, string> ModifiedData = new Dictionary<string, string>();
+
+                ModifiedData.Add("externalDocumentNumber", salesOrderModel.externalDocumentNumber);
+                ModifiedData.Add("shipToContact", salesOrderModel.shipToContact);
+                ModifiedData.Add("shipToName", salesOrderModel.shipToName);
+                ModifiedData.Add("orderDate", string.Format("{0:yyyy-MM-dd}", salesOrderModel.orderDateTime));
+                ModifiedData.Add("requestedDeliveryDate", string.Format("{0:yyyy-MM-dd}", salesOrderModel.requestedDeliveryDateTime));
+
+                var updatedSalesOrder = BCAPIServices.UpdateEntity<BCEntities.salesOrder>(salesOrder.id.ToString(), ModifiedData, salesOrder.etag, "", true);
+
             }
             catch (DataServiceRequestException ex)
             {
 
             }
 
-            return Redirect("Index");
+            return View("Index"); 
         }
        
 

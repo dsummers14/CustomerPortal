@@ -42,19 +42,17 @@ public static class BCAPIServices
     public static TEntity CreateEntity<TEntity>(TEntity pDataFields, string pODataParms = "", bool pByCompany = true)
     {
         TEntity iEntity = default(TEntity);
-        var iEntityUrl = typeof(TEntity).Name + "s";
-        var iURl = ODataWebService.BuildODataUrl(pByCompany);
+        var iURl = ODataWebService.BuildODataUrl(pByCompany) + typeof(TEntity).Name + "s";
 
         iEntity = SendRequest<TEntity, TEntity>(iURl, "POST", pDataFields);
 
-        return iEntity;
+        return iEntity; 
     }
 
     public static TEntity UpdateEntity<TEntity>(string pEntityId, Dictionary<string, string> pModifiedFields, string pEtag, string pODataParms = "", bool pByCompany = true)
     {
         TEntity iEntity = default(TEntity);
-        var iEntityUrl = typeof(TEntity).Name + "s";
-        var iURl = ODataWebService.BuildODataUrl(pByCompany);
+        var iURl = ODataWebService.BuildODataUrl(pByCompany) + string.Format("{0}s({1})", typeof(TEntity).Name, pEntityId);
 
         iEntity = SendRequest<Dictionary<string, string>, TEntity>(iURl, "PATCH", pModifiedFields, pEtag);
 
@@ -108,16 +106,17 @@ public static class BCAPIServices
 
     public static TEntity SendRequest<TRequest, TEntity>(string pURL, string pMethod, TRequest pData, string pEtag = "")
     {
-        WebRequest iHttpRequest;
+        HttpWebRequest iHttpRequest;
         Stream iStream = null;
         TEntity iResult;
         JsonSerializer iJsonSerializer = new JsonSerializer();
         string iJsonData = "";
         byte[] iBytes;
 
-        iHttpRequest = HttpWebRequest.Create(pURL);
-        iHttpRequest.Headers.Add("Host", Settings.Default.Host);
+        iHttpRequest = (HttpWebRequest)HttpWebRequest.Create(pURL);
+        iHttpRequest.Host = Settings.Default.Host;
         iHttpRequest.ContentType = "application/json";
+        iHttpRequest.Accept = "*/*";
         iHttpRequest.Method = pMethod;
         iHttpRequest.Timeout = 900000;
 

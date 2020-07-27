@@ -194,7 +194,7 @@ public class BCEntities
     {
         [JsonProperty("@odata.etag")]
         public string etag { get; set; } = "";
-        public string id { get; set; } = Guid.Empty.ToString();
+        public Guid id { get; set; } = Guid.Empty;
         public string number { get; set; } = "";
         public string externalDocumentNumber { get; set; } = "";
         public string orderDate { get; set; } = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
