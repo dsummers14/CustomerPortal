@@ -202,6 +202,8 @@ public class BCEntities
         public string contactId { get; set; } = Guid.Empty.ToString();
         public string customerNumber { get; set; } = "";
         public string customerName { get; set; } = "";
+        public string shipToContact { get; set; } = "";
+        public string shipToName { get; set; } = "";
         public string currencyId { get; set; } = Guid.Empty.ToString();
         public string currencyCode { get; set; } = "";
         public bool pricesIncludeTax { get; set; } = false;
@@ -266,6 +268,26 @@ public class BCEntities
         }
     }
 
+    public class salesOrderUpdate
+    {
+        public string externalDocumentNumber { get; set; } = "";
+        public string orderDate { get; set; } = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
+        public string shipToContact { get; set; } = "";
+        public string shipToName { get; set; } = "";
+        public string salesperson { get; set; } = "";
+        public bool partialShipping { get; set; } = false;
+        public string requestedDeliveryDate { get; set; } = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
+        public int discountAmount { get; set; } = 0;
+        public string phoneNumber { get; set; } = "";
+        public string email { get; set; } = "";
+        public Microsoft.NAV.postalAddressType shippingPostalAddress { get; set; } = new Microsoft.NAV.postalAddressType();
+        public List<salesOrderLine> salesOrderLines { get; set; } = new List<salesOrderLine>();
+        private bool IsNew { get; set; } = false;
+
+        [JsonIgnore]
+        public ErrorResponse error { get; set; }
+      
+    }
     public class salesOrders
     {
         public List<salesOrder> value { get; set; }

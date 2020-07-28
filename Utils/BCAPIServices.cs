@@ -49,12 +49,12 @@ public static class BCAPIServices
         return iEntity; 
     }
 
-    public static TEntity UpdateEntity<TEntity>(string pEntityId, Dictionary<string, string> pModifiedFields, string pEtag, string pODataParms = "", bool pByCompany = true)
+    public static TEntity UpdateEntity<TEntity,TData>(string pEntityId, TData pModifiedFields, string pEtag, string pODataParms = "", bool pByCompany = true)
     {
         TEntity iEntity = default(TEntity);
         var iURl = ODataWebService.BuildODataUrl(pByCompany) + string.Format("{0}s({1})", typeof(TEntity).Name, pEntityId);
 
-        iEntity = SendRequest<Dictionary<string, string>, TEntity>(iURl, "PATCH", pModifiedFields, pEtag);
+        iEntity = SendRequest<TData, TEntity>(iURl, "PATCH", pModifiedFields, pEtag);
 
         return iEntity;
     }

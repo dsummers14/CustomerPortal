@@ -117,22 +117,21 @@ namespace CustomerPortal.Controllers
         {
             if (!ModelState.IsValid)
             {
-
             }
 
             try
             {
                 var salesOrder = BCAPIServices.GetEntityById<BCEntities.salesOrder>(salesOrderModel.id.ToString());
 
-                Dictionary<string, string> ModifiedData = new Dictionary<string, string>();
+                BCEntities.salesOrderUpdate salesOrderUpdate = new BCEntities.salesOrderUpdate();
+                salesOrderUpdate.externalDocumentNumber = salesOrderModel.externalDocumentNumber;
+                salesOrderUpdate.shipToContact = salesOrderModel.shipToContact;
+                salesOrderUpdate.shipToName = salesOrderModel.shipToName;
+                salesOrderUpdate.orderDate = string.Format("{0:yyyy-MM-dd}", salesOrderModel.orderDateTime);
+                salesOrderUpdate.requestedDeliveryDate = string.Format("{0:yyyy-MM-dd}", salesOrderModel.requestedDeliveryDateTime);
+                salesOrderUpdate.shippingPostalAddress = salesOrderModel.shippingPostalAddress;
 
-                ModifiedData.Add("externalDocumentNumber", salesOrderModel.externalDocumentNumber);
-                ModifiedData.Add("shipToContact", salesOrderModel.shipToContact);
-                ModifiedData.Add("shipToName", salesOrderModel.shipToName);
-                ModifiedData.Add("orderDate", string.Format("{0:yyyy-MM-dd}", salesOrderModel.orderDateTime));
-                ModifiedData.Add("requestedDeliveryDate", string.Format("{0:yyyy-MM-dd}", salesOrderModel.requestedDeliveryDateTime));
-
-                var updatedSalesOrder = BCAPIServices.UpdateEntity<BCEntities.salesOrder>(salesOrder.id.ToString(), ModifiedData, salesOrder.etag, "", true);
+                var updatedSalesOrder = BCAPIServices.UpdateEntity<BCEntities.salesOrder, BCEntities.salesOrderUpdate>(salesOrder.id.ToString(), salesOrderUpdate, salesOrder.etag, "", true);
 
             }
             catch (DataServiceRequestException ex)
