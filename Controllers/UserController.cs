@@ -50,10 +50,10 @@ namespace CustomerPortal.Controllers
         public async Task<ActionResult> CreateUser(b2c_ms_graph.UserModel userModel, FormCollection formCollection)
         {
             if (string.IsNullOrEmpty(userModel.newPassword))
-                ModelState.AddModelError("newPassword", "New Password is required.");
+                ModelState.AddModelError("", "New Password is required.");
 
             if (userModel.newPassword != userModel.confirmPassword)
-                ModelState.AddModelError(string.Empty, "New Password and confirm password do not match.");
+                ModelState.AddModelError("", "New Password and confirm password do not match.");
 
             if (ModelState.IsValid)
             {

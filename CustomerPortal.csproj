@@ -846,6 +846,7 @@
     <Content Include="Views\SalesOrder\Index.cshtml" />
     <Content Include="Views\SalesOrder\CreateOrder.cshtml" />
     <Content Include="Views\SalesOrder\UpdateOrder.cshtml" />
+    <Content Include="Views\SalesOrder\_OrderLinesGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

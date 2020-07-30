@@ -211,7 +211,7 @@ public class BCEntities
         public string salesperson { get; set; } = "";
         public bool partialShipping { get; set; } = false;
         public string requestedDeliveryDate { get; set; } = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
-        public int discountAmount { get; set; } = 0;
+        public decimal discountAmount { get; set; } = 0;
         public bool discountAppliedBeforeTax { get; set; } = false;
         public double totalAmountExcludingTax { get; set; } = 0;
         public double totalTaxAmount { get; set; } = 0;
@@ -277,7 +277,7 @@ public class BCEntities
         public string salesperson { get; set; } = "";
         public bool partialShipping { get; set; } = false;
         public string requestedDeliveryDate { get; set; } = string.Format("{0:yyyy-MM-dd}", DateTime.Now);
-        public int discountAmount { get; set; } = 0;
+        public decimal discountAmount { get; set; } = 0;
         public string phoneNumber { get; set; } = "";
         public string email { get; set; } = "";
         public Microsoft.NAV.postalAddressType shippingPostalAddress { get; set; } = new Microsoft.NAV.postalAddressType();

@@ -10,10 +10,15 @@
 
 }
 
- 
-   @(Html.Kendo().Form<b2c_ms_graph.UserModel>()
+@Html.ValidationSummary(true)
+
+@(Html.Kendo().Form<b2c_ms_graph.UserModel>()
     .Name("CreateUser")
     .HtmlAttributes(new { action = "", method = "POST" })
+    .Validatable(v =>
+     {
+       v.ValidationSummary(vs => vs.Enable(true));
+     })
     .Items(items =>
     {
         items.AddGroup()
@@ -77,7 +82,7 @@
     $(document).ready(function () {
         $("#newPassword").attr("type", "password");
         $("#confirmPassword").attr("type", "password");
-        
+
     });
 
 
@@ -97,12 +102,12 @@
 
 
     function getCompanyId() {
-       
+
         return { CompanyId: $('#extension_39d2bd21d67b480891ffa985c6eb1398_CompanyId').val() };
     }
 
     function changeCompany(e) {
-       
+
         $('#extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber').data('kendoComboBox').dataSource.read();
     }
 

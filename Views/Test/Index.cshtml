@@ -1,8 +1,14 @@
 ﻿@model CustomerPortal.UserViewModel
 
+@Html.ValidationSummary(true)
+
 @(Html.Kendo().Form<CustomerPortal.UserViewModel>()
     .Name("formExample")
     .HtmlAttributes(new { action = "", method = "POST" })
+    .Validatable(v =>
+     {
+       v.ValidationSummary(vs => vs.Enable(true));
+     })
     .Items(items =>
     {
         items.AddGroup()
@@ -14,7 +20,7 @@
                     .Label(l => l.Text("First Name:"));
                 i.Add()
                     .Field(f => f.LastName)
-                    .Label(l => l.Text("Last Name:"));               
+                    .Label(l => l.Text("Last Name:"));
             });
     })
 )

@@ -14,90 +14,108 @@
 
     <div class="demo-section k-content">
         <h2>Create Sales Order</h2>
+
+        @Html.ValidationSummary(true)
         <div id="validation-success"></div>
 
-        @(Html.Kendo().Form<CustomerPortal.salesOrderModel>()
-        .Name("SalesOrder")
-        .HtmlAttributes(new { action = "", method = "POST" })
-        .Orientation("vertical")
-        .Layout("grid")
-        .Grid(g => g.Cols(2).Gutter(20))
-        .Items(items =>
+    @(Html.Kendo().Form<CustomerPortal.salesOrderModel>()
+    .Name("SalesOrder")
+    .HtmlAttributes(new { action = "", method = "POST" })
+    .Validatable(v =>
+    {
+        v.ValidateOnBlur(true);
+        v.ValidationSummary(vs => vs.Enable(true));
+    })
+    .Orientation("vertical")
+    .Layout("grid")
+    .Grid(g => g.Cols(2).Gutter(20))
+    .ButtonsTemplate("<button class='k-button k-primary k-form-submit' type='submit'>Submit</button><button class='k-button k-primary k-form-clear'>Cancel</button>")
+    .Events(ev => ev.Clear("onFormClear"))
+    .Items(items =>
+    {
+        items.AddGroup()
+        .Label("General")
+        .Items(i =>
         {
-            items.AddGroup()
-                 .Label("General")
-                 .Items(i =>
-                 {
-                     i.Add()
-                      .Field(f => f.customerNumber)
-                      .Label(l => l.Text("Sell-to Customer:"))
-                      .Editor(e =>
-                      {e.ComboBox()
-                        .Name("customerNumber")
-                        .DataTextField("displayName")
-                        .DataValueField("number")
-                        .HtmlAttributes(new { style = "width:100%" })
-                        .AutoBind(true)
-                        .DataSource(s => s.Read(r => r.Action("GetCustomers", "Customer")).ServerFiltering(true));
-                      });
+            i.Add()
+        .Field(f => f.customerNumber)
+        .Label(l => l.Text("Sell-to Customer:").Optional(false))
+        .Editor(e =>
+        {e.ComboBox()
+        .Name("customerNumber")
+        .DataTextField("displayName")
+        .DataValueField("number")
+        .HtmlAttributes(new { style = "width:100%" })
+        .AutoBind(true)
+        .DataSource(s => s.Read(r => r.Action("GetCustomers", "Customer")).ServerFiltering(true));
+        });
 
-                     i.Add()
-                       .Field(f => f.externalDocumentNumber)
-                      .Label(l => l.Text("External Order Number:"));
+            i.Add()
+        .Field(f => f.externalDocumentNumber)
+        .Label(l => l.Text("External Order Number:"));
 
-                     i.Add()
-                      .Field(f => f.orderDateTime)
-                      .Label(l => l.Text("Order Date:"))
-                      .Editor(e =>
-                      {
-                          e.DatePicker()
-                           .Name("orderDateTime");
-                      });
-                 });
-            items.AddGroup()
-                 .Label("Shipping Info")
-                 .Items(i =>
-                 {
-                     i.Add()
-                     .Field(f => f.requestedDeliveryDateTime)
-                     .Label(l => l.Text("Requested Delivery Date:"))
-                     .Editor(e =>
-                     {
-                         e.DatePicker();
-                     });
+            i.Add()
+        .Field(f => f.orderDateTime)
+        .Label(l => l.Text("Order Date:"))
+        .Editor(e =>
+        {
+            e.DatePicker()
+        .Name("orderDateTime");
+        });
+        });
+        items.AddGroup()
+        .Label("Shipping Info")
+        .Items(i =>
+        {
+            i.Add()
+        .Field(f => f.requestedDeliveryDateTime)
+        .Label(l => l.Text("Requested Delivery Date:"))
+        .Editor(e =>
+        {
+            e.DatePicker();
+        });
 
-                     i.Add()
-                      .Field(f => f.shipToContact)
-                     .Label(l => l.Text("Ship-to Contact:"));
+            i.Add()
+        .Field(f => f.shipToContact)
+        .Label(l => l.Text("Ship-to Contact:"));
 
-                     i.Add()
-                     .Field(f => f.shipToName)
-                    .Label(l => l.Text("Ship-to Name:"));
+            i.Add()
+        .Field(f => f.shipToName)
+        .Label(l => l.Text("Ship-to Name:"));
 
-                     i.Add()
-                     .Field(f => f.shippingPostalAddress.street)
-                    .Label(l => l.Text("Ship-to Street:"));
+            i.Add()
+        .Field(f => f.shippingPostalAddress.street)
+        .Label(l => l.Text("Ship-to Street:"));
 
-                     i.Add()
-                     .Field(f => f.shippingPostalAddress.city)
-                    .Label(l => l.Text("Ship-to City:"));
+            i.Add()
+        .Field(f => f.shippingPostalAddress.city)
+        .Label(l => l.Text("Ship-to City:"));
 
-                     i.Add()
-                     .Field(f => f.shippingPostalAddress.state)
-                    .Label(l => l.Text("Ship-to State:"));
+            i.Add()
+        .Field(f => f.shippingPostalAddress.state)
+        .Label(l => l.Text("Ship-to State:"));
 
-                     i.Add()
-                     .Field(f => f.shippingPostalAddress.postalCode)
-                    .Label(l => l.Text("Ship-to Postal Code:"));
+            i.Add()
+        .Field(f => f.shippingPostalAddress.postalCode)
+        .Label(l => l.Text("Ship-to Postal Code:"));
 
-                 });
+        });
 
-        })
+    })
 
     )
 
+        <br />
+        <h4>Sales Order Lines</h4>
+        @Html.Partial("_OrderLinesGrid")
+
     </div>
 
-<script>
-  
-</script>
+    <script>
+      function onFormClear(e)
+      {
+           e.preventDefault();
+           window.location.href = '@Url.Action("Index", "SalesOrder")';
+      }
+
+    </script>
