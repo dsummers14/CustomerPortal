@@ -1,0 +1,30 @@
+﻿@(Html.Kendo().Grid<Microsoft.NAV.salesOrderLine>
+    ()
+    .Name("grid")
+    .Columns(columns =>
+    {
+        columns.Bound(l => l.lineDetails.number).Width(240).EditorTemplateName("ItemNoLookup").Title("Item No");
+        columns.Bound(l => l.description).Width(450);
+        columns.Bound(l => l.quantity).Width(75);
+        columns.Bound(l => l.unitPrice).Format("{0:c}").Width(75);
+        columns.Bound(l => l.amountExcludingTax).Format("{0:c}").Hidden(true);
+        columns.Bound(l => l.amountIncludingTax).Format("{0:c}").Title("Amount Including Tax");
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:550px;" })
+    .DataSource(dataSource => dataSource
+    .Custom()
+    .Type("odata-v4")
+    .Transport(transport =>
+    {
+        transport.Read(read => read.Url("/oData/SalesOrderLines").Data("function() {return {'$filter': 'documentId eq " + Model.id + "' }}"));
+      
+    })
+    .PageSize(10)
+    .ServerPaging(true)
+    .ServerSorting(true)
+    .ServerFiltering(true)
+    )
+    )

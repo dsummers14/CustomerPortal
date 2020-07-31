@@ -1,28 +1,36 @@
-﻿@(Html.Kendo().Grid<Microsoft.NAV.salesOrderLine>()
-        .Name("grid")
-        .Columns(columns =>
-        {
-            columns.Bound(l => l.lineDetails.number).Width(240).EditorTemplateName("ItemNoLookup").Title("Item No");
-            columns.Bound(l => l.description).Width(450);
-            columns.Bound(l => l.quantity).Width(75);
-            columns.Bound(l => l.unitPrice).Format("{0:c}").Width(75);
-            columns.Bound(l => l.amountExcludingTax).Format("{0:c}").Hidden(true);
-            columns.Bound(l => l.amountIncludingTax).Format("{0:c}").Title("Amount Including Tax");
-
+﻿
+@(Html.Kendo().Grid<Microsoft.NAV.salesOrderLine>
+    ()
+    .Name("grid")
+    //.ToolBar(t => { t.Create(); })
+    .Columns(columns =>
+    {
+        columns.Bound(l => l.lineDetails.number).Width(240).Title("Item No");
+        columns.Bound(l => l.description).Width(450);
+        columns.Bound(l => l.quantity).Width(75);
+        columns.Bound(l => l.unitPrice).Format("{0:c}").Width(75);
+        columns.Bound(l => l.amountExcludingTax).Format("{0:c}").Hidden(true);
+        columns.Bound(l => l.amountIncludingTax).Format("{0:c}").Title("Amount Including Tax");
+        columns.Command(c => { c.Edit(); c.Destroy(); }).Width(250);
+    })
+    .Editable(e => e.Mode(GridEditMode.InLine))
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:550px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Model(model => {
+            model.Id(m => m.id);
+            model.Field(f => f.item).Editable(true);
+            model.Field(f => f.description).Editable(true);
+            model.Field(f => f.quantity).Editable(true);
         })
-        .Pageable()
-        .Sortable()
-        .Scrollable()
-        .HtmlAttributes(new {style = "height:550px;"})
-        .DataSource(dataSource => dataSource
-        .Custom()
-         .Type("odata-v4")
-          .Transport(transport =>
-          {
-          transport.Read(read => read.Url("/oData/SalesOrderLines").Data("function() {return {'$filter': 'documentId eq " + Model.id + "' }}"));
-           })
-        .PageSize(10)
-        .ServerPaging(true)
-        .ServerSorting(true)
-        .ServerFiltering(true)
-        ))
+        .Read(read => read.Action("SalesOrderLines_Read", "SalesOrderLine", new {documentId = Model.id}))
+        .Create(create => create.Action("SalesOrderLine_Create", "SalesOrderLine"))
+         .Update(update => update.Action("SalesOrderLine_Update", "SalesOrderLine"))
+        .Destroy(delete => delete.Action("SalesOrderLine_Delete", "SalesOrderLine"))
+        .PageSize(10))
+
+
+    )
