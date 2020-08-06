@@ -86,23 +86,48 @@ namespace CustomerPortal.Controllers
 
             return Json(iResult.ToDataSourceResult(request, ModelState));
         }
-       
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult SalesOrderLine_Create([DataSourceRequest] DataSourceRequest request,  Guid documentId)
-        {
-            List<salesOrderLine> iResult = new List<salesOrderLine>();
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult SalesOrderLine_Create([DataSourceRequest] DataSourceRequest request, salesOrderLineModel modelSalesOrderLine)
+        {
+            var iResult = new List<salesOrderLine>();
+            var newOrderLine = new Microsoft.NAV.salesOrderLine();
 
             if (!ModelState.IsValid)
             {
             }
 
-          
+            try
+            {
+                var iUri = new Uri(ODataWebService.BuildODataUrl());
+                var iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
+                var iItem = (from item in iWebService.items where item.number == modelSalesOrderLine.number select item).FirstOrDefault();
 
-            iResult.Add(new salesOrderLine());
+                if (iItem != null)
+                {
+                    newOrderLine.id = "";
+                    newOrderLine.documentId = new Guid(modelSalesOrderLine.documentId);
+                    newOrderLine.lineType = "Item";
+                    newOrderLine.itemId = iItem.id;
+                    newOrderLine.description = modelSalesOrderLine.description;
+                    //newOrderLine.lineDetails = new documentLineObjectDetailsType();
+                    //newOrderLine.lineDetails.number = modelSalesOrderLine.number;
+                    //newOrderLine.lineDetails.displayName = modelSalesOrderLine.description;
+                    newOrderLine.quantity = modelSalesOrderLine.quantity;
+                    newOrderLine.unitPrice = (decimal)modelSalesOrderLine.unitPrice;
 
+                    iWebService.AddTosalesOrderLines(newOrderLine);
+                    iWebService.SaveChanges();
 
-
+                    iResult.Add(newOrderLine);
+                }
+            }
+            catch (DataServiceRequestException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                iResult.Add(newOrderLine);
+            }
+        
             return Json(iResult);
         }
       
