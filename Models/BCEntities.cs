@@ -134,6 +134,7 @@ public class BCEntities
     {
         [JsonProperty("@odata.etag")]
         public string etag { get; set; } = "";
+        public string id { get; set; } = Guid.Empty.ToString();
         public string documentId { get; set; } = Guid.Empty.ToString();
         public int sequence { get; set; }
         public string itemId { get; set; } = Guid.Empty.ToString();
@@ -189,6 +190,35 @@ public class BCEntities
             this.IsNew = pNew;
         }
     }
+
+
+    public class salesOrderLineUpdate
+    {
+        public string itemId { get; set; } = Guid.Empty.ToString();
+        public string description { get; set; } = "";
+        public string unitOfMeasureId { get; set; } = Guid.Empty.ToString();
+        public int quantity { get; set; }
+        public double unitPrice { get; set; }
+        public lineDetails lineDetails { get; set; } = new lineDetails();
+       
+        public salesOrderLineUpdate()
+        {
+        }
+
+        public salesOrderLineUpdate(CustomerPortal.salesOrderLineModel salesOrderLine)
+        {
+            this.itemId = salesOrderLine.itemId.ToString();
+            this.lineDetails.number = salesOrderLine.number;
+            this.description = salesOrderLine.description;
+            this.lineDetails.displayName = salesOrderLine.description;
+            this.quantity = (int)salesOrderLine.quantity;
+            this.unitPrice = (double)salesOrderLine.unitPrice;
+
+        }
+
+
+    }
+
 
     public class salesOrder
     {

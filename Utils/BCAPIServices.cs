@@ -22,7 +22,10 @@ public static class BCAPIServices
     public static TEntity GetEntityById<TEntity>(string pEntityId, string pODataParms = "", bool pByCompany = true)
     {
         TEntity iEntity = default(TEntity);
-        var iURl = ODataWebService.BuildODataUrl(pByCompany) + string.Format("{0}s({1})", typeof(TEntity).Name, pEntityId); 
+        var iURl = ODataWebService.BuildODataUrl(pByCompany) + string.Format("{0}s({1})", typeof(TEntity).Name, pEntityId);
+
+        if (!string.IsNullOrEmpty(pODataParms))
+            iURl += "?" + pODataParms;
 
         iEntity = SendRequest<TEntity>(iURl, "GET");
 
@@ -34,6 +37,9 @@ public static class BCAPIServices
         TEntityCollection iEntityCollection = default(TEntityCollection);
         var iURl = ODataWebService.BuildODataUrl(pByCompany) + typeof(TEntityCollection).Name;
 
+        if (!string.IsNullOrEmpty(pODataParms))
+            iURl += "?" + pODataParms;
+
         iEntityCollection = SendRequest<TEntityCollection>(iURl, "GET");
 
         return iEntityCollection;
@@ -44,6 +50,9 @@ public static class BCAPIServices
         TEntity iEntity = default(TEntity);
         var iURl = ODataWebService.BuildODataUrl(pByCompany) + typeof(TEntity).Name + "s";
 
+        if (!string.IsNullOrEmpty(pODataParms))
+            iURl += "?" + pODataParms;
+
         iEntity = SendRequest<TEntity, TEntity>(iURl, "POST", pDataFields);
 
         return iEntity; 
@@ -52,7 +61,10 @@ public static class BCAPIServices
     public static TEntity UpdateEntity<TEntity,TData>(string pEntityId, TData pModifiedFields, string pEtag, string pODataParms = "", bool pByCompany = true)
     {
         TEntity iEntity = default(TEntity);
-        var iURl = ODataWebService.BuildODataUrl(pByCompany) + string.Format("{0}s({1})", typeof(TEntity).Name, pEntityId);
+        var iURl = ODataWebService.BuildODataUrl(pByCompany) + string.Format("{0}s('{1}')", typeof(TEntity).Name, pEntityId);
+
+        if (!string.IsNullOrEmpty(pODataParms))
+            iURl += "?" + pODataParms;
 
         iEntity = SendRequest<TData, TEntity>(iURl, "PATCH", pModifiedFields, pEtag);
 

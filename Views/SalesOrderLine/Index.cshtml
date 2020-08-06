@@ -1,16 +1,27 @@
-﻿
-@(Html.Kendo().Grid<Microsoft.NAV.salesOrderLine>
+﻿@model string 
+
+
+@{
+    ViewBag.Title = "Sales Order Lines";
+
+    var gDocumentId = ViewData["documentId"];
+}
+
+<h2>Sales Order Lines</h2>
+
+
+@(Html.Kendo().Grid<salesOrderLineModel>
     ()
     .Name("grid")
-    .ToolBar(t => { t.Create(); })
+    .ToolBar(t => { t.Create().Text("Add Order Line"); })
     .Columns(columns =>
     {
-        columns.Bound(l => l.lineDetails.number).Width(240).Title("Item No");
+        columns.Bound(l => l.number).Width(240).Title("Item No");
         columns.Bound(l => l.description).Width(450);
         columns.Bound(l => l.quantity).Width(75);
         columns.Bound(l => l.unitPrice).Format("{0:c}").Width(75);
-        columns.Bound(l => l.amountExcludingTax).Format("{0:c}").Hidden(true);
-        columns.Bound(l => l.amountIncludingTax).Format("{0:c}").Title("Amount Including Tax");
+        //columns.Bound(l => l.amountExcludingTax).Format("{0:c}").Hidden(true);
+        //columns.Bound(l => l.amountIncludingTax).Format("{0:c}").Title("Amount Including Tax");
         columns.Command(c => { c.Edit(); c.Destroy(); }).Width(250);
     })
     .Editable(e => e.Mode(GridEditMode.InLine).ConfirmDelete("Delete Line").DisplayDeleteConfirmation("Line Deletes"))
@@ -22,19 +33,24 @@
         .Ajax()
         .Model(model => {
             model.Id(m => m.id);
+            model.Field(f => f.number);
+            model.Field(f => f.description);
+            model.Field(f => f.quantity);
+            model.Field(f => f.unitPrice);
         })
-        .Read(read => read.Action("SalesOrderLines_Read", "SalesOrderLine", new {documentId = Model.id}))
-        .Create(create => create.Action("SalesOrderLine_Create", "SalesOrderLine", new {documentId = Model.id}))
+        .ServerOperation(false)
+        .Read(read => read.Action("SalesOrderLines_Read", "SalesOrderLine", new {documentId = gDocumentId}))
+        .Create(create => create.Action("SalesOrderLine_Create", "SalesOrderLine", new {documentId = gDocumentId}))
          .Update(update => update.Action("SalesOrderLine_Update", "SalesOrderLine"))
         .Destroy(delete => delete.Action("SalesOrderLine_Delete", "SalesOrderLine"))
         .PageSize(10)
         .Events(events => events.Error("error_handler"))
         )
 
-
+    )
     )
 
-    <script type="text/javascript">
+<script type="text/javascript">
     function error_handler(e) {
         if (e.errors) {
             var message = "Errors:\n";
@@ -48,4 +64,4 @@
             alert(message);
         }
     }
-    </script>
+</script>

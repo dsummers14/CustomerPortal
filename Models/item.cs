@@ -7,13 +7,13 @@ namespace Microsoft.NAV
 {
     public partial class item : global::Microsoft.OData.Client.BaseEntityType
     {
-        public DateTime lastDateTimeModified
-        {
-        get
-            {
-              return DateTime.Parse(lastModifiedDateTime.ToString());
-            }
-        }
+        //public DateTime lastDateTimeModified
+        //{
+        //get
+        //    {
+        //      return DateTime.Parse(lastModifiedDateTime.ToString());
+        //    }
+        //}
       
     }
 }

@@ -364,6 +364,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\SalesOrderLineController.cs" />
     <Compile Include="Controllers\SalesQuoteLinesController.cs" />
     <Compile Include="Controllers\SalesQuotesController.cs" />
     <Compile Include="Controllers\SalesQuoteController.cs" />
@@ -405,10 +406,10 @@
     <Compile Include="Models\salesInvoice.cs" />
     <Compile Include="Models\salesInvoiceLine.cs" />
     <Compile Include="Models\item.cs" />
+    <Compile Include="Models\SalesOrderLineModel.cs" />
     <Compile Include="Models\salesQuoteLine.cs" />
     <Compile Include="Models\salesQuote.cs" />
     <Compile Include="Models\salesOrderModel.cs" />
-    <Compile Include="Models\salesOrderLine.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UsersModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
@@ -847,6 +848,9 @@
     <Content Include="Views\SalesOrder\CreateOrder.cshtml" />
     <Content Include="Views\SalesOrder\UpdateOrder.cshtml" />
     <Content Include="Views\SalesOrder\_OrderLinesGrid.cshtml" />
+    <Content Include="Views\SalesOrder\_OrderLinesGridoData.cshtml" />
+    <Content Include="Views\SalesOrder\_OrderLinesToolbar.cshtml" />
+    <Content Include="Views\SalesOrderLine\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -885,6 +889,8 @@
           <DevelopmentServerPort>53087</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://localhost:44316/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>https://localhost:44316/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
