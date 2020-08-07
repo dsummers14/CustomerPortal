@@ -1,17 +1,24 @@
 ﻿
-@(Html.Kendo().Grid<Microsoft.NAV.salesOrderLine>
+@{
+    ViewBag.Title = "Sales Order Lines";
+
+    //var gDocumentId = ViewData["documentId"];
+}
+
+@(Html.Kendo().Grid<salesOrderLineModel>
     ()
     .Name("grid")
-    .ToolBar(t => { t.Create(); })
+    .ToolBar(t => { t.Create().Text("Add Order Line"); })
     .Columns(columns =>
     {
-        columns.Bound(l => l.lineDetails.number).Width(240).Title("Item No");
-        columns.Bound(l => l.description).Width(450);
-        columns.Bound(l => l.quantity).Width(75);
-        columns.Bound(l => l.unitPrice).Format("{0:c}").Width(75);
-        columns.Bound(l => l.amountExcludingTax).Format("{0:c}").Hidden(true);
-        columns.Bound(l => l.amountIncludingTax).Format("{0:c}").Title("Amount Including Tax");
-        columns.Command(c => { c.Edit(); c.Destroy(); }).Width(250);
+        columns.Bound(l => l.documentId).Hidden(true) ;
+        columns.Bound(l => l.number).Width(100).Title("Item No");
+        columns.Bound(l => l.description).Width(200).Title("Description");
+        columns.Bound(l => l.quantity).Width(75).Title("Quantity");
+        columns.Bound(l => l.unitPrice).Format("{0:c}").Width(100).Title("Unit Price");
+        columns.Bound(l => l.amountExcludingTax).Format("{0:c}").Title("Amount Excl Tax").Width(100);
+        columns.Bound(l => l.amountIncludingTax).Format("{0:c}").Title("Amount Incl Tax").Width(100).Hidden(true);
+        columns.Command(c => { c.Edit(); c.Destroy(); }).Width(125);
     })
     .Editable(e => e.Mode(GridEditMode.InLine).ConfirmDelete("Delete Line").DisplayDeleteConfirmation("Line Deletes"))
     .Pageable()
@@ -22,25 +29,33 @@
         .Ajax()
         .Model(model => {
             model.Id(m => m.id);
+            model.Field(f => f.documentId).DefaultValue(Model.id.ToString());
+            model.Field(f => f.number);
+            model.Field(f => f.description);
+            model.Field(f => f.quantity);
+            model.Field(f => f.unitPrice);
+            model.Field(f => f.amountIncludingTax).Editable(false);
+            model.Field(f => f.amountExcludingTax).Editable(false);
         })
-        .Read(read => read.Action("SalesOrderLines_Read", "SalesOrderLine", new {documentId = Model.id}))
-        .Create(create => create.Action("SalesOrderLine_Create", "SalesOrderLine", new {documentId = Model.id}))
+        .ServerOperation(false)
+        .Read(read => read.Action("SalesOrderLines_Read", "SalesOrderLine", new {documentId = Model.id.ToString() }))
+        .Create(create => create.Action("SalesOrderLine_Create", "SalesOrderLine", new {documentId = Model.id.ToString() }))
          .Update(update => update.Action("SalesOrderLine_Update", "SalesOrderLine"))
         .Destroy(delete => delete.Action("SalesOrderLine_Delete", "SalesOrderLine"))
         .PageSize(10)
         .Events(events => events.Error("error_handler"))
         )
 
-
     )
 
-    <script type="text/javascript">
+
+<script type="text/javascript">
     function error_handler(e) {
         if (e.errors) {
             var message = "Errors:\n";
             $.each(e.errors, function (key, value) {
                 if ('errors' in value) {
-                    $.each(value.errors, function() {
+                    $.each(value.errors, function () {
                         message += this + "\n";
                     });
                 }
@@ -48,4 +63,4 @@
             alert(message);
         }
     }
-    </script>
+</script>

@@ -22,6 +22,9 @@ namespace CustomerPortal
         public double discountAmount { get; set; }
         public int discountPercent { get; set; }
 
+        public decimal amountIncludingTax { get; set; }
+
+        public decimal amountExcludingTax { get; set; }
 
         public salesOrderLineModel()
         {
@@ -34,12 +37,13 @@ namespace CustomerPortal
             this.id = salesOrderLine.id;
             this.itemId = salesOrderLine.itemId.ToString();
             this.number = salesOrderLine.lineDetails.number;
-            this.description = salesOrderLine.lineDetails.displayName;
+            this.description = salesOrderLine.description;
             this.discountAmount = (double)salesOrderLine.discountAmount;
             this.discountPercent = (int)salesOrderLine.discountPercent;
             this.quantity = (int)salesOrderLine.quantity;
             this.unitPrice = (double)salesOrderLine.unitPrice;
-
+            this.amountIncludingTax = (decimal)salesOrderLine.amountIncludingTax;
+            this.amountExcludingTax = (decimal)salesOrderLine.amountExcludingTax;
         }
 
         public salesOrderLineModel(BCEntities.salesOrderLine salesOrderLine)
@@ -48,12 +52,13 @@ namespace CustomerPortal
             this.id = salesOrderLine.id;
             this.itemId = salesOrderLine.itemId.ToString();
             this.number = salesOrderLine.lineDetails.number;
-            this.description = salesOrderLine.lineDetails.displayName;
+            this.description = salesOrderLine.description;
             this.discountAmount = (double)salesOrderLine.discountAmount;
             this.discountPercent = (int)salesOrderLine.discountPercent;
             this.quantity = (int)salesOrderLine.quantity;
             this.unitPrice = (double)salesOrderLine.unitPrice;
-
+            this.amountIncludingTax = (decimal)salesOrderLine.amountIncludingTax;
+            this.amountExcludingTax = (decimal)salesOrderLine.amountExcludingTax;
         }
 
     }

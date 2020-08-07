@@ -20,7 +20,7 @@
              .ToolBar(t => t.Custom().Text("Add Order").Action("CreateOrder", "SalesOrder"))
             .Columns(columns =>
             {
-                columns.Bound(p => p.number).ClientTemplate(Html.ActionLink("#=number#", "Index", "SalesOrderLine", new { id = "#=id#" }, new object()).ToHtmlString()).Title("Order No");
+                columns.Bound(p => p.number).ClientTemplate(Html.ActionLink("#=number#", "UpdateOrder", "SalesOrder", new { id = "#=id#" }, new object()).ToHtmlString()).Title("Order No");
                 columns.Bound(p => p.customerNumber).Visible(!filterCustomer);
                 columns.Bound(p => p.customerName).Visible(!filterCustomer);
                 columns.Bound(p => p.externalDocumentNumber);

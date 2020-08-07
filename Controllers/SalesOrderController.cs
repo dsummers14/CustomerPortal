@@ -11,13 +11,14 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.Client;
 using System.Security.Claims;
 using Microsoft.Ajax.Utilities;
+using CustomerPortal.Utils;
 
 namespace CustomerPortal.Controllers
 {
     [Authorize]
     public class SalesOrderController : Controller
     {
-      
+
         public ActionResult Index()
         {
             return View();
@@ -26,27 +27,19 @@ namespace CustomerPortal.Controllers
         [HttpGet]
         public ActionResult CreateOrder()
         {
-
-            return View(newOrder());
-        }
-
-        public salesOrderModel newOrder()
-        {
             var customerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerNumber").Select(s => s.Value).FirstOrDefault();
             var webRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
             bool filterCustomer = (webRole != "1");
-
             var newOrder = new salesOrderModel();
 
             newOrder.orderDateTime = DateTime.Now;
             newOrder.requestedDeliveryDateTime = DateTime.Now;
             newOrder.shippingPostalAddress = new Microsoft.NAV.postalAddressType();
 
-            if (filterCustomer) 
+            if (filterCustomer)
                 newOrder.customerNumber = customerNumber;
-                    
 
-            return newOrder;
+            return View(newOrder);
         }
 
         [HttpPost]
@@ -64,9 +57,8 @@ namespace CustomerPortal.Controllers
 
             try
             {
-                Uri iUri = new Uri(ODataWebService.BuildODataUrl());
-                NAV iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
-               
+                var iUri = new Uri(ODataWebService.BuildODataUrl());
+                var iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
 
                 newOrder.customerNumber = salesOrderModel.customerNumber;
                 newOrder.externalDocumentNumber = salesOrderModel.externalDocumentNumber;
@@ -75,7 +67,6 @@ namespace CustomerPortal.Controllers
                 newOrder.shipToContact = salesOrderModel.shipToContact;
                 newOrder.shipToName = salesOrderModel.shipToName;
                 newOrder.shippingPostalAddress = salesOrderModel.shippingPostalAddress;
-
 
                 iWebService.AddTosalesOrders(newOrder);
                 iWebService.SaveChanges();
@@ -108,8 +99,8 @@ namespace CustomerPortal.Controllers
                 salesOrderModel.number = salesOrder.number;
                 salesOrderModel.customerNumber = salesOrder.customerNumber;
                 salesOrderModel.externalDocumentNumber = salesOrder.externalDocumentNumber;
-                salesOrderModel.orderDateTime = ODataWebService.EdmDateToDateTime(salesOrder.orderDate);
-                salesOrderModel.requestedDeliveryDateTime = ODataWebService.EdmDateToDateTime(salesOrder.requestedDeliveryDate);
+                salesOrderModel.orderDateTime = DateTime.Parse(salesOrder.orderDate.ToString());
+                salesOrderModel.requestedDeliveryDateTime = DateTime.Parse(salesOrder.requestedDeliveryDate.ToString());
                 salesOrderModel.shipToContact = salesOrder.shipToContact;
                 salesOrderModel.shipToName = salesOrder.shipToName;
                 salesOrderModel.shippingPostalAddress = salesOrder.shippingPostalAddress;
@@ -118,7 +109,7 @@ namespace CustomerPortal.Controllers
             {
             }
 
-            
+
             return View(salesOrderModel);
         }
 
@@ -128,58 +119,79 @@ namespace CustomerPortal.Controllers
             if (!ModelState.IsValid)
             {
             }
-
-            try
+            else
             {
-                var salesOrder = BCAPIServices.GetEntityById<BCEntities.salesOrder>(salesOrderModel.id.ToString());
-
-                BCEntities.salesOrderUpdate salesOrderUpdate = new BCEntities.salesOrderUpdate();
-                salesOrderUpdate.externalDocumentNumber = salesOrderModel.externalDocumentNumber;
-                salesOrderUpdate.shipToContact = salesOrderModel.shipToContact;
-                salesOrderUpdate.shipToName = salesOrderModel.shipToName;
-                salesOrderUpdate.orderDate = string.Format("{0:yyyy-MM-dd}", salesOrderModel.orderDateTime);
-                salesOrderUpdate.requestedDeliveryDate = string.Format("{0:yyyy-MM-dd}", salesOrderModel.requestedDeliveryDateTime);
-                salesOrderUpdate.shippingPostalAddress = salesOrderModel.shippingPostalAddress;
-
-                var updatedSalesOrder = BCAPIServices.UpdateEntity<BCEntities.salesOrder, BCEntities.salesOrderUpdate>(salesOrder.id.ToString(), salesOrderUpdate, salesOrder.etag, "", true);
-
-                if (updatedSalesOrder.error != null)
+                try
                 {
-                    ModelState.AddModelError("", updatedSalesOrder.error.message);
+                    var salesOrder = BCAPIServices.GetEntityById<BCEntities.salesOrder>(salesOrderModel.id.ToString());
+                    var salesOrderUpdate = new BCEntities.salesOrderUpdate();
+
+                    salesOrderUpdate.externalDocumentNumber = salesOrderModel.externalDocumentNumber;
+                    salesOrderUpdate.shipToContact = salesOrderModel.shipToContact;
+                    salesOrderUpdate.shipToName = salesOrderModel.shipToName;
+                    salesOrderUpdate.orderDate = string.Format("{0:yyyy-MM-dd}", salesOrderModel.orderDateTime);
+                    salesOrderUpdate.requestedDeliveryDate = string.Format("{0:yyyy-MM-dd}", salesOrderModel.requestedDeliveryDateTime);
+                    salesOrderUpdate.shippingPostalAddress = salesOrderModel.shippingPostalAddress;
+
+                    var updatedSalesOrder = BCAPIServices.UpdateEntity<BCEntities.salesOrder, BCEntities.salesOrderUpdate>(salesOrder.id.ToString(), salesOrderUpdate, salesOrder.etag, "", true);
+
+                    if (updatedSalesOrder.error != null)
+                    {
+                        ModelState.AddModelError("", updatedSalesOrder.error.message);
+                    }
+                }
+                catch (DataServiceRequestException ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return View(salesOrderModel);
                 }
             }
-            catch (DataServiceRequestException ex)
-            {
-                ModelState.AddModelError("", ex.Message);
-            }
 
-            if (!ModelState.IsValid)
-            {
-                return View(salesOrderModel);
-            }
-
-            return View("Index"); 
+            return View("Index");        
         }
-      
-
     }
 }
 
-//Uri iUri = new Uri(ODataWebService.BuildODataUrl());
-//NAV iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
+//[HttpPost]
+//public ActionResult UpdateOrder(salesOrderModel salesOrderModel)
+//{
+//    if (!ModelState.IsValid)
+//    {
+//    }
+//    else
+//    {
+//        try
+//        {
+//            var iUri = new Uri(ODataWebService.BuildODataUrl());
+//                var iWebService = new NAV(iUri) {Credentials = ODataWebService.CreateCredentials(iUri.ToString())};        
+//            var salesOrders = new DataServiceCollection<salesOrder>(iWebService.salesOrders.Where(s => s.id == salesOrderModel.id));
+//            var salesOrder = salesOrders.FirstOrDefault();
 
-//var salesOrder = (from lsalesOrder in iWebService.salesOrders where lsalesOrder.id == salesOrderModel.id select lsalesOrder).FirstOrDefault();
+//            salesOrder.externalDocumentNumber = salesOrderModel.externalDocumentNumber;
+//            salesOrder.shipToContact = salesOrderModel.shipToContact;
+//            salesOrder.shipToName = salesOrderModel.shipToName;
+//            salesOrder.orderDate = Microsoft.OData.Edm.Date.Parse(salesOrderModel.orderDateTime.ToString());
+//            salesOrder.requestedDeliveryDate = Microsoft.OData.Edm.Date.Parse(salesOrderModel.requestedDeliveryDateTime.ToString());
+//            salesOrder.shippingPostalAddress = salesOrderModel.shippingPostalAddress;
 
-//DataServiceCollection<salesOrder> salesOrdersCollection = new DataServiceCollection<salesOrder>(iWebService);
-//salesOrdersCollection.Add(salesOrder);
+//            iWebService.UpdateObject(salesOrder);
+//            iWebService.SaveChanges();
+//        }
+//        catch (DataServiceRequestException ex)
+//        {
+//            ModelState.AddModelError("", ex.Message);
+//        }
+//    }
 
-//                 salesOrder.externalDocumentNumber = salesOrderModel.externalDocumentNumber;
-//                    salesOrder.orderDate = salesOrderModel.orderDateTime;
-//                    salesOrder.requestedDeliveryDate = salesOrderModel.requestedDeliveryDateTime;
-//                    salesOrder.currencyCode = "USD";
-//                    salesOrder.shipToContact = salesOrderModel.shipToContact;
-//                    salesOrder.shipToName = salesOrderModel.shipToName;
-//                    salesOrder.shippingPostalAddress = salesOrderModel.shippingPostalAddress;
 
-//                    iWebService.UpdateObject(salesOrder);
-//                    iWebService.SaveChanges(SaveChangesOptions.PostOnlySetProperties);
+//    if (!ModelState.IsValid)
+//    {
+//        return View(salesOrderModel);
+//    }
+
+//    return View("Index");
+//}

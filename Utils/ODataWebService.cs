@@ -66,6 +66,11 @@ public static class ODataWebService
         return DateTime.Parse(pEdmDate.ToString());
     }
 
+    public static Microsoft.OData.Edm.Date? DateTimeToEdmDate(DateTime pDateTime)
+    {
+        return Microsoft.OData.Edm.Date.Parse(pDateTime.ToString());
+    }
+
     public static System.Net.ICredentials CreateCredentials(string pWSUrl)
     {
         var iTenantContext = TenantContext();

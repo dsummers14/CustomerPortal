@@ -61,7 +61,7 @@ public static class BCAPIServices
     public static TEntity UpdateEntity<TEntity,TData>(string pEntityId, TData pModifiedFields, string pEtag, string pODataParms = "", bool pByCompany = true)
     {
         TEntity iEntity = default(TEntity);
-        var iURl = ODataWebService.BuildODataUrl(pByCompany) + string.Format("{0}s('{1}')", typeof(TEntity).Name, pEntityId);
+        var iURl = ODataWebService.BuildODataUrl(pByCompany) + string.Format("{0}s({1})", typeof(TEntity).Name, pEntityId);
 
         if (!string.IsNullOrEmpty(pODataParms))
             iURl += "?" + pODataParms;
