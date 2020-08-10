@@ -1,18 +1,11 @@
-﻿
-@{
-    ViewBag.Title = "Sales Order Lines";
-
-    //var gDocumentId = ViewData["documentId"];
-}
-
-@(Html.Kendo().Grid<salesOrderLineModel>
+﻿@(Html.Kendo().Grid<salesOrderLineModel>
     ()
-    .Name("grid")
+    .Name("OrderLines")
     .ToolBar(t => { t.Create().Text("Add Order Line"); })
     .Columns(columns =>
     {
         columns.Bound(l => l.documentId).Hidden(true) ;
-        columns.Bound(l => l.number).Width(100).Title("Item No");
+        columns.Bound(l => l.itemNumber).Width(150).Title("Item No").EditorTemplateName("itemNumber");
         columns.Bound(l => l.description).Width(200).Title("Description");
         columns.Bound(l => l.quantity).Width(75).Title("Quantity");
         columns.Bound(l => l.unitPrice).Format("{0:c}").Width(100).Title("Unit Price");
@@ -30,7 +23,7 @@
         .Model(model => {
             model.Id(m => m.id);
             model.Field(f => f.documentId).DefaultValue(Model.id.ToString());
-            model.Field(f => f.number);
+            model.Field(f => f.itemNumber);
             model.Field(f => f.description);
             model.Field(f => f.quantity);
             model.Field(f => f.unitPrice);
@@ -40,14 +33,27 @@
         .ServerOperation(false)
         .Read(read => read.Action("SalesOrderLines_Read", "SalesOrderLine", new {documentId = Model.id.ToString() }))
         .Create(create => create.Action("SalesOrderLine_Create", "SalesOrderLine", new {documentId = Model.id.ToString() }))
-         .Update(update => update.Action("SalesOrderLine_Update", "SalesOrderLine"))
+        .Update(update => update.Action("SalesOrderLine_Update", "SalesOrderLine"))
         .Destroy(delete => delete.Action("SalesOrderLine_Delete", "SalesOrderLine"))
         .PageSize(10)
         .Events(events => events.Error("error_handler"))
-        )
-
     )
+)
 
+
+@*@(Html.Kendo().Window() 
+        .Name("ItemLookupWindow") 
+        .Title("Item Lookup")
+        .Visible(false) 
+        .Resizable(r => r.Enabled(true)) 
+        .Draggable(true) 
+        .Content(
+                  @<div>
+                    @Html.Partial("_ItemLookupGrid");
+                  </div>
+                  )
+    //.Render()
+)*@
 
 <script type="text/javascript">
     function error_handler(e) {
@@ -63,4 +69,31 @@
             alert(message);
         }
     }
+
+    //function onItemLookup(e) {
+    //    var row = $(this.element).closest("tr");
+    //    var grid = $("#OrderLines").data("kendoGrid");
+    //    orderLine = grid.dataItem(row);
+    //    //cell = $('#OrderLines').find('tbody tr:eq(' + e.index + ') td:eq(1)');
+    //    e.preventDefault();
+
+    //    var wnd = $("#ItemLookupWindow").data("kendoWindow");
+    //    wnd.center().open();
+    //};
+
+
+    //function ItemLookupAdd(e) {
+    //    e.preventDefault();
+    //    var Item = this.dataItem($(e.currentTarget).closest("tr"));
+
+    //    ItemNo = Item.No;
+    //    Description = Item.Description;
+
+    //    var grid = $("#OrderLines").data("kendoGrid");
+    //    grid.addRow();
+
+    //    var wnd = $("#ItemLookupWindow").data("kendoWindow");
+    //    wnd.center().close();
+    //}
+
 </script>

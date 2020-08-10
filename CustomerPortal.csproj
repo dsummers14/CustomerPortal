@@ -825,9 +825,8 @@
     <Content Include="Views\Shared\EditorTemplates\Hidden.vbhtml" />
     <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ItemDescriptionLookup.vbhtml" />
-    <Content Include="Views\Shared\EditorTemplates\ItemNoLookup.vbhtml" />
     <Content Include="Views\Shared\EditorTemplates\Month.vbhtml" />
-    <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EditNumber.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SalespersonCodeLookup.vbhtml" />
     <Content Include="Views\Shared\EditorTemplates\ShipToCodeLookup.vbhtml" />
@@ -849,8 +848,9 @@
     <Content Include="Views\SalesOrder\UpdateOrder.cshtml" />
     <Content Include="Views\SalesOrder\_OrderLinesGrid.cshtml" />
     <Content Include="Views\SalesOrder\_OrderLinesGridoData.cshtml" />
-    <Content Include="Views\SalesOrder\_OrderLinesToolbar.cshtml" />
     <Content Include="Views\SalesOrderLine\Index.cshtml" />
+    <Content Include="Views\Shared\_ItemLookupGrid.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\itemNumber.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

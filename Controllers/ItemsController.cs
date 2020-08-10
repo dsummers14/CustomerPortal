@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
            
         public IQueryable<item> GetItems(ODataQueryOptions queryOptions)
         {
-            IQueryable<item> iQuery = null;
+           IQueryable<item> iQuery = null;
             Uri iUri = new Uri(ODataWebService.BuildODataUrl());
             NAV iWebService = new NAV(iUri) {Credentials = ODataWebService.CreateCredentials(iUri.ToString())};
 

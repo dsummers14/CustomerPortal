@@ -17,7 +17,7 @@
     .Columns(columns =>
     {
         columns.Bound(l => l.documentId).Hidden(true) ;
-        columns.Bound(l => l.number).Width(240).Title("Item No");
+        columns.Bound(l => l.itemNumber).Width(240).Title("Item No");
         columns.Bound(l => l.description).Width(450);
         columns.Bound(l => l.quantity).Width(75);
         columns.Bound(l => l.unitPrice).Format("{0:c}").Width(75);
@@ -35,7 +35,7 @@
         .Model(model => {
             model.Id(m => m.id);
             model.Field(f => f.documentId).DefaultValue(gDocumentId);
-            model.Field(f => f.number);
+            model.Field(f => f.itemNumber);
             model.Field(f => f.description);
             model.Field(f => f.quantity);
             model.Field(f => f.unitPrice);

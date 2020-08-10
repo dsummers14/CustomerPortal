@@ -1,0 +1,39 @@
+﻿@model string
+
+@(Html.Kendo().ComboBox()
+            .Name("itemNumber")
+             .DataTextField("itemNumber")
+             .DataValueField("itemNumber")
+             .HtmlAttributes(new {style = "width:150px"})
+             .Filter("equals")
+             .AutoBind(false)
+             .MinLength(3)
+             .DataSource(datasource => datasource
+         .Read(r => r.Action("GetItems", "Item"))
+     .ServerFiltering(true)))
+
+
+@*@(Html.Kendo().Button()
+    .Name("itemlookupButton")
+    .Tag("em")
+    .SpriteCssClass("k-icon k-i-search")
+    .Events(e => e.Click("onItemLookup"))
+    .Content("<span class='k-sprite'>Lookup</span>"))*@
+
+
+
+
+@*.DataSource(dataSource => dataSource
+    .Custom()
+    .Sort(s => s.Add("number"))
+               .Type("odata-v4")
+    .Transport(transport =>
+    {
+        transport.Read(read => read.Url("/oData/Items"));
+
+    })
+    .PageSize(20)
+    .ServerPaging(true)
+    .ServerSorting(true)
+    .ServerFiltering(true)
+    ))*@

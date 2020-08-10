@@ -208,7 +208,7 @@ public class BCEntities
         public salesOrderLineUpdate(CustomerPortal.salesOrderLineModel salesOrderLine)
         {
             this.itemId = salesOrderLine.itemId.ToString();
-            this.lineDetails.number = salesOrderLine.number;
+            this.lineDetails.number = salesOrderLine.itemNumber;
             this.description = salesOrderLine.description;
             this.lineDetails.displayName = salesOrderLine.description;
             this.quantity = (int)salesOrderLine.quantity;

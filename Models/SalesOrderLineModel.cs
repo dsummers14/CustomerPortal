@@ -13,7 +13,7 @@ namespace CustomerPortal
         public string documentId { get; set; } = Guid.Empty.ToString();
         public string itemId { get; set; } = Guid.Empty.ToString();
         public string lineType { get; set; } = "";
-        public string number { get; set; } = "";
+        public string itemNumber { get; set; } = "";
 
         public string description { get; set; } = "";
         public string unitOfMeasureId { get; set; } = Guid.Empty.ToString();
@@ -36,7 +36,7 @@ namespace CustomerPortal
             this.documentId = salesOrderLine.documentId.ToString();
             this.id = salesOrderLine.id;
             this.itemId = salesOrderLine.itemId.ToString();
-            this.number = salesOrderLine.lineDetails.number;
+            this.itemNumber = salesOrderLine.lineDetails.number;
             this.description = salesOrderLine.description;
             this.discountAmount = (double)salesOrderLine.discountAmount;
             this.discountPercent = (int)salesOrderLine.discountPercent;
@@ -51,7 +51,7 @@ namespace CustomerPortal
             this.documentId = salesOrderLine.documentId.ToString();
             this.id = salesOrderLine.id;
             this.itemId = salesOrderLine.itemId.ToString();
-            this.number = salesOrderLine.lineDetails.number;
+            this.itemNumber = salesOrderLine.lineDetails.number;
             this.description = salesOrderLine.description;
             this.discountAmount = (double)salesOrderLine.discountAmount;
             this.discountPercent = (int)salesOrderLine.discountPercent;

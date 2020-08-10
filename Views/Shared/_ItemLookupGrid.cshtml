@@ -1,0 +1,50 @@
+﻿@(Html.Kendo().Grid<Microsoft.NAV.item>
+        ()
+        .Name("ItemsGrid")
+        .ToolBar(t => t.Template("<input class='k-textbox' id='searchbox' />&nbsp;<button> id='searchbutton' Search</>"))
+    .Columns(c =>
+    {
+        c.Command(l => l.Custom("Add").Click("ItemLookupAdd"));
+        c.Bound(s => s.number);
+        c.Bound(s => s.displayName);
+        c.Bound(s => s.inventory);
+        //c.Bound(Function(s) s.Unit_Cost).Format("{0:c}").Visible(User.IsInRole("Salesperson") OrElse User.IsInRole("Admin") OrElse User.IsInRole("Sales Manager"))
+        //c.Bound(Function(s) s.Availability).ClientTemplate(Html.ActionLink("#=Availability#", "Drilldown", Nothing, New With {.onClick = "onClickInventory('#=No#'); return false;"}).ToHtmlString())
+    })
+     .DataSource(datasource => datasource
+         .Ajax()
+         .ServerOperation(true)
+         .PageSize(20)
+         .Model(model =>
+         {
+            model.Id(s => s.id);
+            model.Field(s => s.displayName).Editable(false);
+            model.Field(s => s.inventory).Editable(false);
+          })
+        .Read(r => r.Action("Item_Read", "Item")))      
+    .Pageable()
+    .Filterable()
+    .Sortable()
+    //.Render()
+   
+    //    .Selectable(Sub(s) s.Mode(GridSelectionMode.Single)) _
+    //    .Events(Sub(e) e.Change("onItemLookupSelectItem")) _
+
+
+ )
+
+<script type="text/javascript">
+
+    jQuery(function () { jQuery("#searchbutton").kendoButton({}); });
+
+    function addSearch() {
+        return { SearchText: $('#searchbox').val() };
+    }
+
+    $('#searchbutton').click(function () {
+        $('#ItemsGrid').data('kendoGrid').dataSource.read();
+    });
+
+</script>
+
+

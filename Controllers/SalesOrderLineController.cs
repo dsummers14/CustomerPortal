@@ -51,8 +51,13 @@ namespace CustomerPortal.Controllers
         {
             var iResult = new List<salesOrderLineModel>();
 
+            if (string.IsNullOrEmpty(modelSalesOrderLine.itemNumber))
+                ModelState.AddModelError("", "Item nunber is required");
+
+
             if (!ModelState.IsValid)
             {
+
                 iResult.Add(modelSalesOrderLine);
             }
             else
@@ -61,7 +66,7 @@ namespace CustomerPortal.Controllers
                 {
                     var iUri = new Uri(ODataWebService.BuildODataUrl());
                     var iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
-                    var iItem = (from item in iWebService.items where item.number == modelSalesOrderLine.number select item).FirstOrDefault();
+                    var iItem = (from item in iWebService.items where item.number == modelSalesOrderLine.itemNumber select item).FirstOrDefault();
 
                     if (iItem != null)
                     {
