@@ -4,12 +4,13 @@
             .Name("itemNumber")
              .DataTextField("itemNumber")
              .DataValueField("itemNumber")
-             .HtmlAttributes(new {style = "width:150px"})
-             .Filter("equals")
+             .HtmlAttributes(new {style = "width:190px"})
+             .Filter("contains")
              .AutoBind(false)
              .MinLength(3)
+             .Events(e => e.Select("onSelectItemNo"))
              .DataSource(datasource => datasource
-         .Read(r => r.Action("GetItems", "Item"))
+         .Read(r => r.Action("GetItemsByNumber", "Item"))
      .ServerFiltering(true)))
 
 
@@ -36,4 +37,5 @@
     .ServerPaging(true)
     .ServerSorting(true)
     .ServerFiltering(true)
+
     ))*@

@@ -850,7 +850,7 @@
     <Content Include="Views\SalesOrder\_OrderLinesGridoData.cshtml" />
     <Content Include="Views\SalesOrderLine\Index.cshtml" />
     <Content Include="Views\Shared\_ItemLookupGrid.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\itemNumber.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\itemNumberLookup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

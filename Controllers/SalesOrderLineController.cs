@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using Microsoft.NAV;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-using System.Runtime.InteropServices;
 using Microsoft.Owin.Security.Provider;
 using Microsoft.OData.Client;
 
@@ -31,7 +30,7 @@ namespace CustomerPortal.Controllers
             {
                 var iUri = new Uri(ODataWebService.BuildODataUrl());
                 var iWebService = new NAV(iUri) {Credentials = ODataWebService.CreateCredentials(iUri.ToString())};
-                var salesOrderLines = (from lsalesOrderLine in iWebService.salesOrderLines where lsalesOrderLine.documentId == documentId select lsalesOrderLine);
+                var salesOrderLines = (from lsalesOrderLine in iWebService.salesOrderLines where lsalesOrderLine.documentId == documentId orderby lsalesOrderLine.sequence select lsalesOrderLine);
 
                 foreach (salesOrderLine lsalesOrderLine in salesOrderLines)
                  {                 
@@ -64,15 +63,25 @@ namespace CustomerPortal.Controllers
             {
                 try
                 {
+                    var documentId = new Guid(modelSalesOrderLine.documentId);
                     var iUri = new Uri(ODataWebService.BuildODataUrl());
                     var iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
                     var iItem = (from item in iWebService.items where item.number == modelSalesOrderLine.itemNumber select item).FirstOrDefault();
+                    var lastSequence = (from salesOrderLine in iWebService.salesOrderLines
+                                            orderby salesOrderLine.sequence descending
+                                            where salesOrderLine.documentId == documentId 
+                                            select new  {id = salesOrderLine.id, lineNumber = salesOrderLine.sequence}).FirstOrDefault();
+                    int lastLineNumber = 10000;
+                   
+                    if (lastSequence != null)
+                        lastLineNumber = (int)lastSequence.lineNumber + 10000;
 
                     if (iItem != null)
                     {
                         var newOrderLine = new Microsoft.NAV.salesOrderLine();
                         newOrderLine.id = "";
-                        newOrderLine.documentId = new Guid(modelSalesOrderLine.documentId);
+                        newOrderLine.documentId = documentId;
+                        newOrderLine.sequence = lastLineNumber;
                         newOrderLine.lineType = "Item";
                         newOrderLine.itemId = iItem.id;
                         newOrderLine.description = modelSalesOrderLine.description;

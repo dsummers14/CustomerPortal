@@ -18,15 +18,15 @@ namespace CustomerPortal.Controllers
 
 
         [AllowAnonymous]
-        public JsonResult GetItems(string text)
+        public JsonResult GetItemsByNumber(string text)
         {
             Uri iUri = new Uri(ODataWebService.BuildODataUrl());
             NAV iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
             
             var iResults = (from Item in iWebService.items
-                            orderby Item.displayName
+                            orderby Item.number
                             where Item.number.Contains(text)
-                            select new { itemNumber = Item.number, displayName = Item.displayName, id =Item.id }).ToList().Distinct();
+                            select new { itemNumber = Item.number, displayName = Item.displayName, id =Item.id }).ToList();
 
             return Json(iResults, JsonRequestBehavior.AllowGet);
         }

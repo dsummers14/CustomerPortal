@@ -5,7 +5,7 @@
     .Columns(columns =>
     {
         columns.Bound(l => l.documentId).Hidden(true) ;
-        columns.Bound(l => l.itemNumber).Width(150).Title("Item No").EditorTemplateName("itemNumber");
+        columns.Bound(l => l.itemNumber).Width(150).Title("Item No").EditorTemplateName("itemNumberLookup");
         columns.Bound(l => l.description).Width(200).Title("Description");
         columns.Bound(l => l.quantity).Width(75).Title("Quantity");
         columns.Bound(l => l.unitPrice).Format("{0:c}").Width(100).Title("Unit Price");
@@ -69,6 +69,16 @@
             alert(message);
         }
     }
+
+    function onSelectItemNo(e) {
+        var thisItem = this.dataItem(e.item.index());
+
+        var row = $(this.element).closest("tr");
+        var grid = $("#OrderLines").data("kendoGrid");
+        var dataItem = grid.dataItem(row);
+        dataItem.set("description", thisItem.displayName);
+        e.sender.close();
+    }  
 
     //function onItemLookup(e) {
     //    var row = $(this.element).closest("tr");
