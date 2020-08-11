@@ -84,7 +84,7 @@ namespace CustomerPortal.Controllers
                         newOrderLine.sequence = lastLineNumber;
                         newOrderLine.lineType = "Item";
                         newOrderLine.itemId = iItem.id;
-                        newOrderLine.description = modelSalesOrderLine.description;
+                        newOrderLine.description = modelSalesOrderLine.itemDescription;
                         newOrderLine.quantity = modelSalesOrderLine.quantity;
                         newOrderLine.unitPrice = (decimal)modelSalesOrderLine.unitPrice;
 
@@ -129,7 +129,7 @@ namespace CustomerPortal.Controllers
                     if (salesOrderLine != null)
                     {
                         salesOrderLine.itemId = new Guid(modelSalesOrderLine.itemId);
-                        salesOrderLine.description = modelSalesOrderLine.description;
+                        salesOrderLine.description = modelSalesOrderLine.itemDescription;
                         salesOrderLine.quantity = modelSalesOrderLine.quantity;
                         salesOrderLine.unitPrice = (decimal)modelSalesOrderLine.unitPrice;
 

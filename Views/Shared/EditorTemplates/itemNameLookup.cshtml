@@ -1,0 +1,13 @@
+﻿
+@(Html.Kendo().ComboBox()
+            .Name("itemDescription")
+             .DataTextField("displayName")
+             .DataValueField("displayName")
+             .HtmlAttributes(new {style = "width:270px"})
+             .Filter("contains")
+             .AutoBind(false)
+             .MinLength(3)
+             .Events(e => e.Select("onSelectItemName"))
+             .DataSource(datasource => datasource
+         .Read(r => r.Action("GetItemsByName", "Item"))
+     .ServerFiltering(true)))

@@ -209,8 +209,8 @@ public class BCEntities
         {
             this.itemId = salesOrderLine.itemId.ToString();
             this.lineDetails.number = salesOrderLine.itemNumber;
-            this.description = salesOrderLine.description;
-            this.lineDetails.displayName = salesOrderLine.description;
+            this.description = salesOrderLine.itemDescription;
+            this.lineDetails.displayName = salesOrderLine.itemDescription;
             this.quantity = (int)salesOrderLine.quantity;
             this.unitPrice = (double)salesOrderLine.unitPrice;
 

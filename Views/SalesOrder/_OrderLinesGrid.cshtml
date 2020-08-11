@@ -6,7 +6,7 @@
     {
         columns.Bound(l => l.documentId).Hidden(true) ;
         columns.Bound(l => l.itemNumber).Width(150).Title("Item No").EditorTemplateName("itemNumberLookup");
-        columns.Bound(l => l.description).Width(200).Title("Description");
+        columns.Bound(l => l.itemDescription).Width(200).Title("Description").EditorTemplateName("itemNameLookup"); ;
         columns.Bound(l => l.quantity).Width(75).Title("Quantity");
         columns.Bound(l => l.unitPrice).Format("{0:c}").Width(100).Title("Unit Price");
         columns.Bound(l => l.amountExcludingTax).Format("{0:c}").Title("Amount Excl Tax").Width(100);
@@ -24,7 +24,7 @@
             model.Id(m => m.id);
             model.Field(f => f.documentId).DefaultValue(Model.id.ToString());
             model.Field(f => f.itemNumber);
-            model.Field(f => f.description);
+            model.Field(f => f.itemDescription);
             model.Field(f => f.quantity);
             model.Field(f => f.unitPrice);
             model.Field(f => f.amountIncludingTax).Editable(false);
@@ -76,10 +76,19 @@
         var row = $(this.element).closest("tr");
         var grid = $("#OrderLines").data("kendoGrid");
         var dataItem = grid.dataItem(row);
-        dataItem.set("description", thisItem.displayName);
+        dataItem.set("itemDescription", thisItem.displayName);
         e.sender.close();
     }  
 
+    function onSelectItemName(e) {
+        var thisItem = this.dataItem(e.item.index());
+
+        var row = $(this.element).closest("tr");
+        var grid = $("#OrderLines").data("kendoGrid");
+        var dataItem = grid.dataItem(row);
+        dataItem.set("itemNumber", thisItem.itemNumber);
+        e.sender.close();
+    }  
     //function onItemLookup(e) {
     //    var row = $(this.element).closest("tr");
     //    var grid = $("#OrderLines").data("kendoGrid");

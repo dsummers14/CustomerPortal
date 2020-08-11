@@ -851,6 +851,7 @@
     <Content Include="Views\SalesOrderLine\Index.cshtml" />
     <Content Include="Views\Shared\_ItemLookupGrid.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\itemNumberLookup.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\itemNameLookup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

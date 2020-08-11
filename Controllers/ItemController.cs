@@ -20,13 +20,36 @@ namespace CustomerPortal.Controllers
         [AllowAnonymous]
         public JsonResult GetItemsByNumber(string text)
         {
-            Uri iUri = new Uri(ODataWebService.BuildODataUrl());
-            NAV iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
+            object iResults = null;
             
-            var iResults = (from Item in iWebService.items
-                            orderby Item.number
-                            where Item.number.Contains(text)
-                            select new { itemNumber = Item.number, displayName = Item.displayName, id =Item.id }).ToList();
+            if (text.Length >= 3)
+            {
+                Uri iUri = new Uri(ODataWebService.BuildODataUrl());
+                NAV iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
+
+                iResults = (from Item in iWebService.items
+                                orderby Item.number
+                                where Item.number.Contains(text)
+                                select new { itemNumber = Item.number, displayName = Item.displayName, id = Item.id }).ToList();
+            }
+            return Json(iResults, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowAnonymous]
+        public JsonResult GetItemsByName(string text)
+        {
+            object iResults = null;
+            
+            if (text.Length >= 3)
+            {
+                Uri iUri = new Uri(ODataWebService.BuildODataUrl());
+                NAV iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
+
+                 iResults = (from Item in iWebService.items
+                                orderby Item.displayName
+                                where Item.displayName.Contains(text)
+                                select new { itemNumber = Item.number, displayName = Item.displayName, id = Item.id }).ToList();
+            }
 
             return Json(iResults, JsonRequestBehavior.AllowGet);
         }
