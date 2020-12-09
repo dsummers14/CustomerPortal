@@ -1,0 +1,69 @@
+﻿@using System.Security.Claims
+
+@{
+    ViewBag.Title = "Subscriptions";
+
+    var gcustomerNumber = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_CustomerNumber").Select(s => s.Value).FirstOrDefault();
+    var gwebRole = ClaimsPrincipal.Current.Claims.Where(w => w.Type == "extension_WebRole").Select(s => s.Value).FirstOrDefault();
+    bool filterCustomer = (gwebRole != "1"); 
+}
+
+
+<h2>Webhook Subscriptions</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-18 col-md-12">
+            @(Html.Kendo().Grid<Microsoft.NAV.subscriptions>
+            ()
+            .Name("grid")
+             .ToolBar(t => t.Custom().Text("Add Subscription").Action("CreateSubscription", "Subscription"))
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.subscriptionId).ClientTemplate(Html.ActionLink("#=subscriptionId#", "UpdateSubscriptionI", "SubscriptionI", new { id = "#=subscriptionId#" }, new object()).ToHtmlString()).Title("Subscription Id").Width(150);
+                columns.Bound(p => p.resource);
+                columns.Bound(p => p.expirationDateTime);
+                columns.Bound(p => p.clientState);
+                columns.Bound(p => p.lastModifiedDateTime);
+          
+            })
+            .Pageable()
+            .Sortable()
+            .Scrollable()
+            .Filterable()
+            .HtmlAttributes(new { style = "height:550px;" })
+       .DataSource(dataSource => dataSource
+        .Ajax()
+        .Model(model =>
+        {
+            model.Id(m => m.subscriptionId);
+        })
+        .ServerOperation(false)
+        .Read(read => read.Action("Subscriptions_Read", "Subscription"))
+        .Create(create => create.Action("Subscription_Create", "Subscription"))
+        .Update(update => update.Action("Subscription_Update", "Subscription"))
+        .Destroy(delete => delete.Action("Subscription_Delete", "Subscription"))
+        .PageSize(10)
+        .Events(events => events.Error("error_handler"))
+        )
+     )
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+
+</script>

@@ -368,6 +368,7 @@
     <Compile Include="Controllers\SalesQuoteLinesController.cs" />
     <Compile Include="Controllers\SalesQuotesController.cs" />
     <Compile Include="Controllers\SalesQuoteController.cs" />
+    <Compile Include="Controllers\SubscriptionController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -520,6 +521,7 @@
       <DependentUpon>CustomerPortal.edmx</DependentUpon>
       <LastGenOutput>CustomerPortal.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="CustomerPortal.edmx.sql" />
     <Content Include="CustomerPortal.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CustomerPortal.edmx</DependentUpon>
@@ -636,6 +638,7 @@
     <Content Include="Content\kendo.silver.mobile.min.css.map" />
     <Content Include="Content\kendo.uniform.min.css.map" />
     <Content Include="Content\kendo.uniform.mobile.min.css.map" />
+    <None Include="Properties\PublishProfiles\CustomerPortal20201208160721 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -852,6 +855,8 @@
     <Content Include="Views\Shared\_ItemLookupGrid.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\itemNumberLookup.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\itemNameLookup.cshtml" />
+    <Content Include="Views\Subscription\IndexSO.cshtml" />
+    <Content Include="Views\Subscription\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
