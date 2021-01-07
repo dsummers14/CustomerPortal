@@ -137,32 +137,32 @@ namespace CustomerPortal.Controllers
             return View(iModelState);
         }
 
-       
+
         public async Task<ActionResult> UpdateUser(DataSourceRequest request, string Id)
         {
             if (!string.IsNullOrEmpty(Id))
             {
                 try
-                {             
+                {
                     GraphServiceClient graphClient = GraphClient.CreateGraphClient();
 
                     var user = await graphClient.Users[Id]
                                                 .Request()
                                                 .Select($"id,displayName,identities,{customerNumberAttributeName},{webRoleAttributeName},{ TenantIdAttributeName},{ CompanyIdAttributeName}")
                                                 .GetAsync();
-                    
+
                     var updateUser = new b2c_ms_graph.UserModel();
                     updateUser.Id = user.Id;
-                    updateUser.extension_39d2bd21d67b480891ffa985c6eb1398_TenantId = user.AdditionalData[TenantIdAttributeName].ToString();
-                    updateUser.extension_39d2bd21d67b480891ffa985c6eb1398_CompanyId = user.AdditionalData[CompanyIdAttributeName].ToString();
-                    updateUser.extension_39d2bd21d67b480891ffa985c6eb1398_WebRole = int.Parse( user.AdditionalData[webRoleAttributeName].ToString());
-                    updateUser.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber = user.AdditionalData[customerNumberAttributeName].ToString();
+                    updateUser.extension_39d2bd21d67b480891ffa985c6eb1398_TenantId = GetAdditionalData(user,TenantIdAttributeName);
+                    updateUser.extension_39d2bd21d67b480891ffa985c6eb1398_CompanyId = GetAdditionalData(user, CompanyIdAttributeName);
+                    updateUser.extension_39d2bd21d67b480891ffa985c6eb1398_WebRole = int.Parse(GetAdditionalData(user, webRoleAttributeName));
+                    updateUser.extension_39d2bd21d67b480891ffa985c6eb1398_CustomerNumber = GetAdditionalData(user, customerNumberAttributeName);
                     //updateUser.newPassword = user.PasswordProfile.Password;
                     //updateUser.confirmPassword = user.PasswordProfile.Password;
                     updateUser.DisplayAccountEnabled = true;
                     updateUser.DisplayEmailName = user.Identities.Where(i => i.SignInType == "emailAddress").Select(s => s.IssuerAssignedId).FirstOrDefault();
                     updateUser.DisplayName = user.DisplayName;
-                    
+
                     return View(updateUser);
                 }
                 catch (Exception ex)
@@ -171,6 +171,16 @@ namespace CustomerPortal.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public string GetAdditionalData(User user, string attributeName)
+        {
+            string value = "";
+
+            if (user.AdditionalData.ContainsKey(attributeName))
+                value = user.AdditionalData[attributeName].ToString();
+
+            return value; 
         }
 
         [HttpPost()]

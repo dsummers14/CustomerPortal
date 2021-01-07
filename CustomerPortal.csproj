@@ -427,6 +427,7 @@
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\Globals.cs" />
     <Compile Include="Utils\GraphClient.cs" />
+    <Compile Include="Utils\Helpers.cs" />
     <Compile Include="Utils\MsalAppBuilder.cs" />
     <Compile Include="Utils\MSALPerUserMemoryTokenCache.cs" />
     <Compile Include="Utils\ODataWebService.cs" />
@@ -644,6 +645,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Images\e3bbe4e1-6cec-ea11-bca9-00155df3a615Logo.png" />
+    <Content Include="Images\DefaultLogo.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.css.map" />

@@ -23,11 +23,18 @@ namespace WebApplication1.Controllers
             Uri iUri = new Uri(ODataWebService.BuildODataUrl(false));
             NAV iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
             
-            var iResults = (from Company in iWebService.companies
-                            orderby Company.displayName
-                            select new {Company.displayName, Company.id }).ToList().Distinct();
+            try
+            {
+                var iResults = (from Company in iWebService.companies
+                                orderby Company.displayName
+                                select new { Company.displayName, Company.id }).ToList().Distinct();
 
-            return Json(iResults, JsonRequestBehavior.AllowGet);
+                return Json(iResults, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
         }
 
     }

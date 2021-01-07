@@ -4,16 +4,16 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <a id="profile-link">@User.Identity.Name</a>
-                <div id="profile-options"> 
-                    @*<ul class="profile-links">
+                @*<div id="profile-options"> 
+                    <ul class="profile-links">
                         <li class="profile-link">
                             @Html.ActionLink("Edit Profile", "EditProfile", "Account")
                         </li>
                         <li class="profile-link">
                             @Html.ActionLink("Reset Password", "ResetPassword", "Account")
                         </li>
-                    </ul>*@
-                </div>
+                    </ul>
+                </div>*@
             </li>
             <li>
                 @Html.ActionLink("Sign out", "SignOut", "Account")

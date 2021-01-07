@@ -61,6 +61,7 @@ namespace CustomerPortal.Controllers
                 var iWebService = new NAV(iUri) { Credentials = ODataWebService.CreateCredentials(iUri.ToString()) };
 
                 newOrder.customerNumber = salesOrderModel.customerNumber;
+                newOrder.billToCustomerNumber = salesOrderModel.customerNumber;
                 newOrder.externalDocumentNumber = salesOrderModel.externalDocumentNumber;
                 newOrder.orderDate = salesOrderModel.orderDateTime;
                 newOrder.requestedDeliveryDate = salesOrderModel.requestedDeliveryDateTime;
@@ -98,6 +99,7 @@ namespace CustomerPortal.Controllers
                 salesOrderModel.id = salesOrder.id;
                 salesOrderModel.number = salesOrder.number;
                 salesOrderModel.customerNumber = salesOrder.customerNumber;
+                salesOrderModel.billToCustomerNumber = salesOrder.customerNumber;
                 salesOrderModel.externalDocumentNumber = salesOrder.externalDocumentNumber;
                 salesOrderModel.orderDateTime = DateTime.Parse(salesOrder.orderDate.ToString());
                 salesOrderModel.requestedDeliveryDateTime = DateTime.Parse(salesOrder.requestedDeliveryDate.ToString());
